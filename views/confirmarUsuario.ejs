@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Confirmar usuário</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images\favicon.ico">
+  <script src="JS/functions.js" type="text/javascript"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+<body>
+  <div class="logo">
+    <h1>Clever</h1>
+    <h2>Maintenance Software</h2>
+    <h2><u>Confirmar usuário:</u></h2>
+  </div>
+  <form action="/confirmarUsuario" method="post">
+    <div class="confirmarUsuario" height="100px">
+      <table cellspacing="15">
+        <tr>
+          <td> <label>Digite o e-mail:</label> </td>
+          <td><input type="email" name="emailConfirmacao" value="" id="emailConfirmacao" size="30" maxlength="100" ></td>
+        </tr>
+        <tr>
+          <td> <label>Digite o nome completo:</label> </td>
+          <td><input type="text" name="nomeConfirmacao" value="" id="nomeConfirmacao" size="30" maxlength="100"></td>
+        </tr>
+      </table>
+    </div class="sub-container-novouser">
+    <input class="botoes" type="submit" name="" value="Procurar" id="procurar">
+  </form>
+
+  <p><a href="/">Voltar para a página de login</a></p>
+</body>
+</html>

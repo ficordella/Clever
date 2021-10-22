@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Resultados da pesquisa</title>
+  <link rel="preconnect" href=https://fonts.googleapis.com>
+  <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
+  <link href=https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href=https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="icon" href="images\favicon.ico">
+  <script src=https://kit.fontawesome.com/cb4069a99b.js crossorigin="anonymous"></script>
+
+</head>
+
+<body class="paginaInicial">
+  <!-- Seção cabeçalho que é utilizada em todas as telas internas do site-->
+  <div class=containerTela>
+    <!--barra de menu superior></!-->
+    <div class="topnav">
+      <span class="bemVindo">Inventário - Resultado de pesquisa</span>
+      <a href="/paginaPrincipal"> <i class="fas fa-house-user"> </i> Página Inicial</a>
+      <div class="topnav-right">
+        <a href="/"> <i class="fas fa-sign-out-alt"></i> Sair</a>
+      </div>
+    </div>
+    <!-- barra de menu lateral></!-->
+
+    <div class="barraLateral">
+      <div class="vertical-menu">
+        <br>
+        <a href="/relatorios">Relatórios</a>
+        <button class="dropdown-btn">Ordens de serviço
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/criarOrdens">Criar ordens de serviço</a>
+          <a href="/pesquisarOrdensServico">Consultar e editar ordens de serviço</a>
+        </div>
+        <button class="dropdown-btn">Ordens preventivas
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/ordemPreventivaCriar">Criar ordem preventiva</a>
+          <a href="/consultarPreventivas">Consultar e editar ordens preventivas</a>
+        </div>
+        <button class="dropdown-btn">Máquinas
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+        <div class="dropdown-container">
+          <a href="/cadastrarMaquinas">Cadastrar máquinas</a>
+          <a href="/consultarMaquinas">Consultar e editar máquinas</a>
+          <a href="/excluirMaquinas">Excluir máquinas</a>
+          <a href="/processoMaquinas">Dados de processo</a>
+        </div>
+        <button class="dropdown-btn">Usuários
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/cadastrarUsuarioInternal">Cadastrar usuários</a>
+          <a href="/consultarEditarUsuarios">Consultar e editar usuários</a>
+        </div>
+        <button class="dropdown-btn">Inventário
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/inventario">Cadastrar Itens</a>
+          <a href="/consultarEditarItensInventario">Consultar e editar Itens</a>
+        </div>
+        <a href="/contato">Contate-nos!</a>
+      </div>
+    </div>
+    <script>
+      /* função para ativar os botões da barra lateral, dropdownbtn*/
+
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+      }
+    </script>
+
+    <div class="conteudo">
+      <div class="conteudoEsquerdoInventario">
+        <form name="itemProcura" action="/resultadosItens" method="post">
+          <div class="mb-3">
+            <label for="idItem" class="form-label" id="number">ID Item</label>
+            <input type="text" class="form-control" name="idItem" id="idItem" maxlength="50" required>
+            <div id="IdItemHelp" class="form-text">Insira o ID do item para poder fazer a atualização</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-group">
+              <label for="descricaoItem" class="form-label">Descrição do item</label>
+              <textarea class="form-control" id="descricaoItem" name="descricaoItem" rows="3" maxlength="100"></textarea>
+              <div id="descricaoitemHelp" class="form-text">Insira a descrição do item que deseja alterar.</div>
+            </div>
+
+          </div>
+          <div class="mb-3">
+            <label for="maquinaItem" class="form-label">Máquina</label>
+            <input type="text" class="form-control" id="maquinaItem" name="maquinaItem" aria-describedby="nomeHelp">
+            <div id="maquinaItemHelp" class="form-text">Insira a identificação da máquina que deseja alterar.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="vendedorItem" class="form-label">Vendedor</label>
+            <input type="text" class="form-control" id="vendedorItem" name="vendedorItem" maxlength="100">
+            <div id="vendedorItemHelp" class="form-text">Insira o nome da empresa ou do vendedor do item que deseja alterar.</div>
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+          <a href="consultarEditarItensInventario" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+
+
+      </div>
+
+      <div class="conteudoDireitoInventario">
+
+        <div class="mb-3">
+
+          <label for="marcaItem" class="form-label">Marca</label>
+          <input type="text" class="form-control" name="marcaItem" id="marcaItem">
+          <div id="marcaItemHelp" class="form-text">Insira a marca do item que deseja alterar.</div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+          <label for="modeloItem" class="form-label">Modelo</label>
+          <input type="text" class="form-control" name="modeloItem" id="modeloItem">
+          <div id="modeloItemHelp" class="form-text">Insira o modelo do item que deseja alterar.</div>
+
+        </div>
+        </form>
+
+        <br>
+
+        <form action="/resultadosItens" method="post">
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="todosItens" id="todosItens" value="true">
+              <label class="form-check-label" for="todosItens">
+                Deletar todos?
+              </label>
+              <div id="todosItensHelp" class="form-text">Se marcado esse campo, a seleção vai deletar todos itens pesquisados</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
+
+            <select multiple class="form-control" id="resultadoItens" ondblclick= alert(Object.values(this))>
+              <% var i = 0; %>
+              <% listaDeItens.forEach(function(item) { %>
+
+              <option value="<%i%>"><%= "ID: "+  item.idItem + ", " + item.descricaoItem +", "+item.maquinaItem+", "+ item.vendedorItem + ", "+item.marcaItem +", "+item.modeloItem; %></option>
+            <%i++;%>
+            <%  }); %>
+
+
+
+
+
+          </select>
+
+
+
+
+
+                <div id="pesqueisaItensHelp" class="form-text">Selecione o item que deseja excluir</div>
+          </div>
+          <div class="containerBtnInventarioEdit">
+            <br>
+            <button type="button" class="btn btn-primary" onclick="limparTodosCampos()"><i class="fas fa-eraser"></i> Limpar</button>
+            <button type="button" class="btn btn-primary" onclick="removeOption()"><i class="fas fa-trash-alt"></i> Excluir</button>
+
+          </div>
+      </div>
+    </div>
+  </div>
+  </form>
+
+  <script src="JS/inventarioFuncoes.js" type="text/javascript"></script>
+
+</body>
+
+</html>

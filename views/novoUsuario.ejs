@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cadastrar Usuário</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images\favicon.ico">
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+
+<body>
+
+
+  <div class="logo">
+    <h1>Clever</h1>
+    <h2>Maintenance Software</h2>
+    <h2><u>Cadastrar usuário:</u></h2>
+  </div>
+
+  <form action="/novoUsuario" method="POST" onsubmit="return validaCamposNovoUsuario()"> <!--POST request para o novoUsuario, inserido onsubmit "return função()"-->
+
+  <div class="form-dadosUsuario">
+
+    <table cellspacing="15">
+      <tr>
+
+        <td> <label> Nome de usuário:</label> </td>
+        <td><input type="text" class="form-control"name="loginNewUser" value="" id="loginNewUser" size="30" maxlength="50"></td>
+
+      </tr>
+      <tr>
+        <td> <label> E-mail:</label> </td>
+        <td><input type="email" class="form-control"name="email" value="" id="newUserEmail" size="30" maxlength="100"></td>
+      </tr>
+      <tr>
+        <td> <label> Nome completo:</label> </td>
+        <td><input type="text"  class="form-control"name="nomeCompleto" value="" id="nomeCompleto" size="30" maxlength="100"></td>
+      </tr>
+      <tr>
+        <td> <label> Data de nascimento:</label> </td>
+        <td><input type="date" name="dataNascimento" value="" id="dataNascimento"></td>
+      </tr>
+      <td> <label>Senha:</label></td>
+      <td><input type="password" class="form-control" name="password" value="" id="newPassword" size="30" maxlength="100"></td>
+      </tr>
+       <td> <label>Confirmação de senha:</label></td>
+      <td><input type="password" name="confirmaSenha" value="" id="passwordCheck" size="30" maxlength="100"></td>
+
+      </tr>
+    </table>
+  </div class="sub-container-novouser">
+  <input class="botoes" type="submit" name="" value="Cadastrar" id="cadastrar">
+
+
+
+  <p><a href="/">Voltar para a página de login</a></p>
+
+
+  <script src="JS/functions.js" type="text/javascript"></script>
+  </form>
+
+</body>
+
+</html>

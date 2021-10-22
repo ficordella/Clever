@@ -1,0 +1,387 @@
+body {
+  background: #3C8DAD;
+  text-align: center;
+}
+
+.logo {
+  background: #3C8DAD;
+}
+
+h1 {
+  color: #E1E5EA;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+  color: #E1E5EA;
+  font-family: 'Montserrat', sans-serif;
+}
+
+p{
+  font-family: 'Montserrat-black', sans-serif;
+}
+
+.textbox {
+  color: #E1E5EA;
+  text-align: left;
+  height: 450px;
+  width: 650px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+}
+
+/*div do novo usuário - novoUsuario*/
+.dadosUsuario {
+  color: #E1E5EA;
+  text-align: left;
+  height: 250px;
+  width: 600px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+
+}
+
+.form-dadosUsuario{
+  color: #E1E5EA;
+  text-align: left;
+  height: 250px;
+  width: 600px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+}
+
+/* div inferior de novo novoUsuario*/
+.sub-container-novouser {
+  color: #E1E5EA;
+  text-align: center;
+  height: 100px;
+  width: 100px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+
+}
+
+.confirmarUsuario {
+  color: #E1E5EA;
+  text-align: left;
+  height: 100px;
+  width: 650px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+
+}
+
+/*redefinir senha*/
+
+.redefinirSenha{
+  color: #E1E5EA;
+  text-align: left;
+  height: 100px;
+  width: 720px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+
+}
+
+/* Alterar senha*/
+
+.alterarSenha{
+  color: #E1E5EA;
+  text-align: left;
+  height: 100px;
+  width: 600px;
+  margin: 0 auto 0 auto;
+  font-family: 'Montserrat-black', sans-serif;
+
+}
+
+/* botões*/
+
+.botoes{
+  width: 100px;
+  font-family: 'Montserrat-black', sans-serif;
+}
+
+
+/*Styles da paginaInicial______________________________________________________*/
+
+
+.containerTela{
+position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.barraLateral{
+  position: absolute;
+  background-color: #eee;
+  width: 15%;
+  height: 93%;
+  font-family: 'Montserrat-black', sans-serif;
+}
+.vertical-menu {
+  width: 100%;
+  height: 100%;
+}
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.paginaInicial{
+  background-color: white;
+}
+
+/*configurações da barra de navegação topnav*/
+.bemVindo{
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.topnav {
+    background-color: #1E3163;
+    overflow: hidden;
+    width: 100%;
+    height: 7%;
+    vertical-align: middle;
+}
+
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  height: 100%;
+  vertical-align: middle;
+}
+
+/* hover dos botões da barra superior */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+  height: 100%;
+  vertical-align: middle;
+}
+
+
+.topnav a.active {
+  background-color: #1E3163;
+  color: white;
+  font-weight: bold;
+  height: 100%;
+  vertical-align: middle;
+}
+
+/* do botão sair a direita */
+.topnav-right {
+  float: right;
+  height: 100%;
+  vertical-align: middle;
+}
+
+
+/*Conteudo interno das telas div*/
+
+.conteudo{
+  background-color: white;
+  position: absolute;
+  display: inline-block;
+  width: 85%;
+  height: 93%;
+  margin-left: 15%;
+}
+
+.conteudoEsquerdo{
+  margin-top: 70px;
+  position:absolute;
+  width: 50%;
+  display: inline-block;
+}
+
+.conteudoDireito{
+  position:absolute;
+    margin-top: 70px;
+  width: 50%;
+  display: inline-block;
+  margin-left: 50%;
+}
+
+/*___________________ configuração dos botões dropdown_________________________*/
+.dropdown-btn {
+  padding: 12px;
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+.dropdown-btn:hover {
+  color: blue;
+  background-color: #ccc;
+}
+
+.dropdown-container {
+  display: none;
+  padding-left: 8px;
+}
+
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+/*________________________________________ Cadastro de usuários__ cadastrarUsuarioInternal.html_____*/
+
+.conteudoEsquerdoUsuario{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+}
+
+.conteudoDireitoUsuario{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  display: inline-block;
+  margin-left: 50%;
+}
+
+.dataNascimentoTipoUsuario{
+  position:absolute;
+  width: 50%;
+}
+
+/*_____________________________________consulta e edição de usuarios___ consultarEditarUsuarios.html_____*/
+.btn-primary{
+  width: 125px;
+  margin: 10px;
+}
+
+.usuariosCabecalho{
+
+  color: black;
+  text-align: left;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+  height: 100%;
+}
+
+.resultadoUsuarios{
+  position:absolute;
+  padding: 15px;
+  width: 90%;
+  height: 570px;
+  background-color:white;
+
+}
+
+.btn-usuarioDireito{
+  width: 90%;
+  position:absolute;
+  display: inline-block;
+  margin-top: 453px;
+}
+
+.celulasUsuarioPesquisado{
+  border: 1px solid lightgray;
+  width: 130px;
+}
+.celulasNomePesquisado{
+  border: 1px solid lightgray;
+  width: 230px;
+}
+
+/*__________________________inventario.html____________________*/
+
+.conteudoEsquerdoInventario{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+}
+
+.conteudoDireitoInventario{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  margin-left: 50%;
+}
+
+/*_----------------- resultadoOrdens-----------------*/
+
+.conteudoEsquerdoResultadoOrdens{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  height: 445px;
+
+}
+
+.conteudoDireitoResultadoOrdens{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  margin-left: 50%;
+  height: 445px;
+
+}
+
+.conteudoBottonResultadoOrdens{
+
+  padding: 15px;
+  position: absolute;
+  width: 100%;
+
+  margin-top: 445px;
+
+}
+/*----------- preventivas-------*/
+
+.conteudoBottonResultadoPreventiva{
+  padding: 15px;
+  position: absolute;
+  width: 100%;
+
+  margin-top: 300px;
+}
+
+.conteudoEsquerdoResultadoPreventivas{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  height: 300px;
+
+}
+
+.conteudoDireitoResultadoPreventivas{
+  padding: 15px;
+  position:absolute;
+  width: 50%;
+  margin-left: 50%;
+  height: 445px;
+
+}
