@@ -127,10 +127,9 @@
 
             <select class="form-select" name="responsavelOrdem">
               <option value = "" selected>Selecione nome do responsável pela ordem preventiva</option>
-              <option value="Filipe Cordella">Filipe Cordella</option>
-
-
-
+              <% listaDeUsuarios.forEach(function(user) { %>
+              <option><%= user.nomeCompleto %></option>
+              <%  }); %>
             </select>
             <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável da ordem preventiva.</div>
           </div>
