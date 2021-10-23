@@ -96,27 +96,26 @@
         <form name="consultarPreventivas" action="/consultarPreventivas" method="post">
           <div class="mb-3">
             <label for="tituloOrdemPreventiva" class="form-label" id="tituloOrdemPre">Código da ordem preventiva</label>
-            <input type="text" class="form-control" name="tituloOrdemPreventiva" id="tituloOrdemPreventiva" maxlength="10" required>
+            <input type="text" class="form-control" name="tituloOrdemPreventiva" id="tituloOrdemPreventiva" maxlength="10" >
             <div id="ordemHelp" class="form-text">Insira o código da ordem preventiva para consultar</div>
           </div>
 
           <div class="mb-3">
             <label for="maquinaOrdem" class="form-label">Máquina</label>
 
-            <select class="form-select" name="maquinaOrdem" required>
-              <option selected>Selecione a máquina desejada</option>
-              <option value="1">BT100</option>
-              <option value="2">BT101</option>
-              <option value="3">BT102</option>
-              <option value="4">BT103</option>
-              <option value="5">BT104</option>
+            <select class="form-select" name="maquinaOrdem" >
+              <option value= "" selected>Selecione a máquina desejada</option>
+              <option value="BT100">BT100</option>
+              <option value="BT101">BT101</option>
+              <option value="BT102">BT102</option>
+              <option value="BT103">BT103</option>
+              <option value="BT104">BT104</option>
             </select>
             <div id="maquinaOrdemHelp" class="form-text">Selecione a máquina que deseja atribuir a ordem Preventiva.</div>
           </div>
 
-          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Pesquisar</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Pesquisar</button>
           <a href="paginaPrincipal" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
-          <button type="button" class="btn btn-primary" onclick="limparTodosCampos()"><i class="fas fa-eraser"></i> Excluir</button>
 
   </div>
 
@@ -128,9 +127,9 @@
         <div class="mb-3">
           <label for="tecnicoOrdem" class="form-label">Responsável pela ordem</label>
 
-          <select class="form-select" name="responsavelOrdem" required>
-            <option selected>Selecione nome do responsável pela ordem preventiva</option>
-            <option value="1">Filipe Cordella</option>
+          <select class="form-select" name="responsavelOrdem" >
+            <option value = "" selected>Selecione nome do responsável pela ordem preventiva</option>
+            <option>Filipe Cordella</option>
 
           </select>
           <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável da ordem preventiva.</div>
@@ -201,18 +200,7 @@
             <th scope="col">Responsável</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              <input type="checkbox" name="codigoPreventiva" value="true">
-               PM_BT101_M</th>
-            <td>BT100</td>
-            <td>12/02/2021</td>
-            <td>Mensal</td>
-            <td>Filipe Cordella</td>
-          </tr>
-
-        </tbody>
+       
       </table>
 
           </div>
