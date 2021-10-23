@@ -41,6 +41,12 @@ app.get("/password", function(req, res) {
 });
 
 app.get("/paginaPrincipal", function(req, res) {
+
+  Ordem.find().exec(function(err, results) {
+     count = results.length
+    console.log(count);
+    return count;
+  });
   res.render("paginaPrincipal");
 });
 
@@ -101,6 +107,10 @@ app.get("/ordemPreventivaCriar", function(req, res) {
 
 app.get("/consultarPreventivas", function(req, res) {
   res.render("consultarPreventivas");
+});
+
+app.get("/resultadoPreventivas", function(req, res) {
+  res.render("resultadoPreventivas");
 });
 
 
@@ -1115,7 +1125,7 @@ app.post("/ordemPreventivaCriar", function(req, res) {
     codigoPreventiva: req.body.tituloOrdemPreventiva,
     maquinaPreventiva: req.body.maquinaOrdem,
     dataInicialPreventiva: req.body.dataOrdem,
-    responsavelPreventiva: req.body.tecnicoOrdem,
+    responsavelPreventiva: req.body.responsavelOrdem,
     frequenciaPreventiva: req.body.flexRadioDefault,
     tarefasPreventiva: req.body.lista
 
@@ -1136,10 +1146,143 @@ var teste = req.body.listaPreventiva;
   });
 
   //---------------------------------------- pesquisar ordem preventiva ------------------------------------------------------//
+  app.post("/consultarPreventivas", function(req, res) {
+      const tituloOrdemPreventiva = req.body.tituloOrdemPreventiva;
+      const maquinaOrdem = req.body.maquinaOrdem;
+      const dataOrdem = req.body.dataOrdem;
+      const responsavelOrdem = req.body.responsavelOrdem;
+      const frequencia = req.body.flexRadioDefault;
+
+      //inicia procura pelos parâmetros passados
+
+      if (tituloOrdemPreventiva != "") {
+        console.log(tituloOrdemPreventiva);
+        Preventiva.find({
+          codigoPreventiva: tituloOrdemPreventiva,
+        }, function(err, foundPreventiva) {
+          if (foundPreventiva) {
+            //res.send(foundPreventiva)
+            res.render("resultadoPreventivas", {
+              listaDeOrdensPreventivas: foundPreventiva
+            });
+            console.log(foundPreventiva);
+          } else {
+            console.log("No preventiva found")
+          }
+        });
+      } else {
+        if (maquinaOrdem != "") {
+          console.log(maquinaOrdem);
+          Preventiva.find({
+            maquinaPreventiva: maquinaOrdem,
+          }, function(err, foundPreventiva) {
+            if (foundPreventiva) {
+              //res.send(foundPreventiva)
+              res.render("resultadoPreventivas", {
+                listaDeOrdensPreventivas: foundPreventiva
+              });
+              console.log(foundPreventiva);
+            } else {
+              console.log("No preventiva found")
+            }
+          });
+        } else {
+            if (responsavelOrdem != "") {
+              console.log(responsavelOrdem);
+              Preventiva.find({
+                responsavelPreventiva: responsavelOrdem,
+              }, function(err, foundPreventiva) {
+                if (foundPreventiva) {
+                //  res.send(foundPreventiva)
+                  res.render("resultadoPreventivas", {
+                    listaDeOrdensPreventivas: foundPreventiva
+                  });
+                  console.log(foundPreventiva);
+                } else {
+                  console.log("No preventiva found")
+                }
+              });
+            } else {
+              if (frequencia != "") {
+                console.log(frequencia);
+                Preventiva.find({
+                  frequenciaPreventiva: frequencia,
+                }, function(err, foundPreventiva) {
+                  if (foundPreventiva) {
+                  //  res.send(foundPreventiva)
+                    res.render("resultadoPreventivas", {
+                      listaDeOrdensPreventivas: foundPreventiva
+                    });
+                    console.log(foundPreventiva);
+                  } else {
+                    console.log("No preventiva found")
+                  }
+                });
+              } else {
+                res.send("Nenhum dado inserido para pesquisa!")
+              }
+            }
+          }
+        }
+    });
+
+//------------------------------------------------------atualizar preventiva------------------------------------------------------------------//
+app.post("/resultadoPreventivas", function(req, res) {
+
+  //atualiza o campo máquina
+  const maquinaOrdem = req.body.maquinaOrdem;
+  if (maquinaOrdem != "") {
+    Preventiva.updateOne({
+        codigoPreventiva: req.body.tituloOrdemPreventiva
+      }, {
+        maquinaPreventiva: req.body.maquinaOrdem
+      },
+      function(err) {
+        if (!err) {
+          res.render("consultarPreventivas");
+        } else {
+          res.send("erro, não foi possivel atualizar, tente novamente");
+        }
+      }
+    );
+  }
+
+  const responsavelOrdem = req.body.responsavelOrdem;
+  if (responsavelOrdem != "") {
+    Preventiva.updateOne({
+        codigoPreventiva: req.body.tituloOrdemPreventiva
+      }, {
+        responsavelPreventiva: req.body.responsavelOrdem
+      },
+      function(err) {
+        if (!err) {
+          res.render("consultarPreventivas");
+        } else {
+          res.send("erro, não foi possivel atualizar, tente novamente");
+        }
+      }
+    );
+  }
+
+  const flexRadioDefault = req.body.flexRadioDefault;
+  if (flexRadioDefault != "") {
+    Preventiva.updateOne({
+        codigoPreventiva: req.body.tituloOrdemPreventiva
+      }, {
+        frequenciaPreventiva: req.body.flexRadioDefault
+      },
+      function(err) {
+        if (!err) {
+          res.render("consultarPreventivas");
+        } else {
+          res.send("erro, não foi possivel atualizar, tente novamente");
+        }
+      }
+    );
+  }
 
 
-
-
+});
 
 
 //____________________________________________________________________________________________________________________________________________________
