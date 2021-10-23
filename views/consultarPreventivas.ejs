@@ -129,10 +129,12 @@
 
           <select class="form-select" name="responsavelOrdem" >
             <option value = "" selected>Selecione nome do responsável pela ordem preventiva</option>
-            <option>Filipe Cordella</option>
+            <% listaDeUsuarios.forEach(function(user) { %>
+            <option><%= user.nomeCompleto %></option>
+            <%  }); %>
 
           </select>
-          <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável da ordem preventiva.</div>
+          <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável técnico da ordem preventiva.</div>
         </div>
 
         <div class="form-group">
@@ -145,7 +147,7 @@
             <tr>
               <td>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="mensal" name="flexRadioDefault" id="ordemMensal" checked>
+                  <input class="form-check-input" type="radio" value="mensal" name="flexRadioDefault" id="ordemMensal" >
                   <label class="form-check-label" for="ordemMensal">
                     Mensal
                   </label>
@@ -200,7 +202,7 @@
             <th scope="col">Responsável</th>
           </tr>
         </thead>
-       
+
       </table>
 
           </div>
