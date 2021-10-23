@@ -102,15 +102,40 @@ app.get("/resultadoOrdens", function(req, res) {
 });
 
 app.get("/ordemPreventivaCriar", function(req, res) {
-  res.render("ordemPreventivaCriar");
+
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+      res.render("ordemPreventivaCriar", {
+        listaDeUsuarios: foundUser
+      });
+  });
 });
 
 app.get("/consultarPreventivas", function(req, res) {
-  res.render("consultarPreventivas");
+
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+      res.render("consultarPreventivas", {
+        listaDeUsuarios: foundUser
+      });
+  });
+
 });
 
 app.get("/resultadoPreventivas", function(req, res) {
-  res.render("resultadoPreventivas");
+
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+      res.render("resultadoPreventivas", {
+        listaDeUsuarios: foundUser
+      });
+  });
 });
 
 
@@ -939,7 +964,7 @@ app.post("/pesquisarOrdensServico", function(req, res) {
 
               if (dataOrdemFechamento != "") {
                 console.log(dataOrdemFechamento);
-                Item.find({
+                Ordem.find({
                   dataFinal: dataOrdemFechamento,
                 }, function(err, foundOrdens) {
                   if (foundOrdens) {
@@ -1153,23 +1178,45 @@ var teste = req.body.listaPreventiva;
       const responsavelOrdem = req.body.responsavelOrdem;
       const frequencia = req.body.flexRadioDefault;
 
+
+
       //inicia procura pelos parâmetros passados
+
+
 
       if (tituloOrdemPreventiva != "") {
         console.log(tituloOrdemPreventiva);
+
+
+
+
         Preventiva.find({
           codigoPreventiva: tituloOrdemPreventiva,
         }, function(err, foundPreventiva) {
           if (foundPreventiva) {
+
+
             //res.send(foundPreventiva)
+            console.log(foundPreventiva)
+
+
+
             res.render("resultadoPreventivas", {
-              listaDeOrdensPreventivas: foundPreventiva
+
+              listaDeOrdensPreventivas: foundPreventiva,
+
+
             });
+
             console.log(foundPreventiva);
           } else {
             console.log("No preventiva found")
           }
         });
+
+
+
+
       } else {
         if (maquinaOrdem != "") {
           console.log(maquinaOrdem);
