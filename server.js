@@ -138,6 +138,26 @@ app.get("/resultadoPreventivas", function(req, res) {
   });
 });
 
+app.get("/cadastrarMaquinas", function(req, res) {
+  res.render("cadastrarMaquinas");
+});
+
+app.get("/consultarMaquinas", function(req, res) {
+  res.render("consultarMaquinas");
+});
+
+app.get("/processoMaquinas", function(req, res) {
+  res.render("processoMaquinas");
+});
+
+app.get("/excluirMaquinas", function(req, res) {
+  res.render("excluirMaquinas");
+});
+
+app.get("/resultadoMaquinas", function(req, res) {
+  res.render("resultadoMaquinas");
+});
+
 
 //função para o banco de dados do registro de usuário
 // construtor para salvar o usuário no banco de dados
