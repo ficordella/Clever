@@ -97,17 +97,157 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-        <form id="usuarioForm" action="/cadastrarUsuarioInternal" method="post">
-      <div class="conteudoEsquerdoUsuario">
+      <form id="maquinaForm" action="/cadastrarMaquinas" method="post">
+        <div class="conteudoEsquerdoUsuario">
+
+          <div class="mb-3">
+            <label for="idMaquina" class="form-label">ID Máquina</label>
+            <input type="text" class="form-control" id="idMaquina" name="idMaquina" maxlength="15" onkeyup="this.value = this.value.toUpperCase();">
+            <div id="nomeUsuarioHelp" class="form-text">Insira o ID da máquina sem espaços</div>
+          </div>
+
+          <div class="mb-3">
+              <label for="nomeMaquina" class="form-label">Nome completo da máquina</label>
+              <input type="text" class="form-control" id="nomeCompletoUsuario" name="nomeMaquina" aria-describedby="nomeHelp">
+              <div id="nomeHelp" class="form-text">Por favor digite o nome completo da máquina</div>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-group">
+                <label for="descricaoMaquina" class="form-label">Descrição detalhada da máquina</label>
+                <textarea class="form-control" id="descricaoMaquina" name="descricaoMaquina" rows="3" maxlength="500" ></textarea>
+                <div id="maquinaHelp" class="form-text">Insira a descrição detalhada da máquina.</div>
+              </div>
+              <br>
+
+            <div class="mb-3">
+            <label class ="form-label">Turno de trabalho: </label>
+            </div>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" value="A" name="flexRadioDefault" id="turnoA" checked>
+            <label class="form-check-label" for="tipoAdministrador">
+              Turno A 06:00 - 14:00
+            </label>
+          </div>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="B" name="flexRadioDefault" id="turnoB" >
+            <label class="form-check-label" for="tipoTecnico">
+              Turno B 14:00 - 22:00
+            </label>
+            </div>
+            <br>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="C" name="flexRadioDefault" id="turnoC" >
+              <label class="form-check-label" for="tipoUsuario">
+                Turno C 22:00 - 06:00
+              </label>
+
+          </div>
+
+          <div class="mb-3">
+            <br>
+            <label for="setorMaquina" class="form-label">Setor</label>
+            <select class="form-select" name="setorMaquina">
+              <option value = "" selected>Selecione o setor da máquina</option>
+              <option >Usinagem</option>
+              <option >Teste</option>
+              <option >Pintura</option>
+
+            </select>
+            <div id="setorOrdemHelp" class="form-text">Insira o setor onde deseja realizar a OS.</div>
+
+          </div>
+        </div>
+
+
+        </div>
+        <div class="conteudoDireitoUsuario">
+          <div class="mb-3">
+            <label for="tecnicoMaquina" class="form-label">Responsável técnico pela máquina</label>
+
+            <select class="form-select" name="tecnicoMaquina">
+              <option value = "" selected>Selecione nome do responsável técnico pela máquina</option>
+              <option value="Filipe Cordella">Filipe Cordella</option>
+
+            </select>
+            <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável pela máquina.</div>
+          </div>
+
+          <div class="mb-3">
+
+            <label for="criticidadeMaquina" class="form-label">Criticidade da máquina</label>
+            <select class="form-select" name="criticidadeMaquina">
+              <option value = "" selected>Selecione a criticidade da máquina</option>
+              <option value = "1">1</option>
+              <option value = "2">2</option>
+              <option value = "3">3</option>
+              <option value = "4">4</option>
+              <option value = "5">5</option>
+
+            </select>
+            <div id="setorOrdemHelp" class="form-text">Selecione de 1 a 5, sendo 1 muito critica e 5 não crítica.</div>
+
+          </div>
+
+          <div class="mb-3">
+
+            <label for="dataInstalacao" class="form-label">Data de instalação</label>
+            <input type="date" class="form-control" name="dataInstalacao" id="dataOrdem" required>
+            <div id="dataInstalacao" class="form-text">Insira a data de instalação da máquina.</div>
+
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Itens críticos: </label>
+
+             <input type="text" class="form-control" name="itensCriticos" id="task" >
+             <div id="ordemHelp" class="form-text">Insira o ID do item que deseja associar à máquina</div>
+             <br>
+             <label class="form-label">Lista de itens adicionados: </label>
+
+                <select multiple class="form-control" name="listaItensCriticos" id="listaItensCriticos"></select>
 
 
 
-      </div>
-      <div class="conteudoDireitoUsuario">
+            <script type="text/javascript">
+               var listaDeItensMaquina = [];
+                function addItem() {
+                  var x = document.getElementById("listaItensCriticos");
+                  var option = document.createElement("option");
+                  option.text = document.getElementById("task").value;
+                  option.value = document.getElementById("task").value;
+                  x.add(option);
+                  listaTarefasPreventivas.push(option.value);
+                  document.getElementById("task").value = "";
+                  //alert(listaTarefasPreventivas);
+                }
+
+                //remover usuario selecionado na caixa de opções
+                function removeItem() {
+                  var x = document.getElementById("listaItensCriticos");
+                  x.remove(x.selectedIndex);
+                  listaTarefasPreventivas.pop(x.selectedIndex);
+
+                }
+             </script>
 
 
-      </div>
-    </form>
+
+            <div class="containerBtnInventarioEdit">
+              <div id="ordemHelp" class="form-text">Selecione o item e clique em exclir para deletar ou clique em adicionar para adicionar um novo item </div>
+              <br>
+
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cadastrar</button>
+              <button type = button class="btn btn-primary" onclick="addItem()"><i class="fas fa-plus-square"></i> Adicionar</button>
+              <button type = button class="btn btn-primary" onclick="removeItem()"><i class="fas fa-trash-alt"></i> Remover</button>
+
+            </div>
+          </div>
+
+
+        </div>
+      </form>
     </div>
 
   </div>
