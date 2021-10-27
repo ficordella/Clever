@@ -43,7 +43,7 @@ app.get("/password", function(req, res) {
 app.get("/paginaPrincipal", function(req, res) {
 
   Ordem.find().exec(function(err, results) {
-     count = results.length
+    count = results.length
     console.log(count);
     return count;
   });
@@ -107,9 +107,9 @@ app.get("/ordemPreventivaCriar", function(req, res) {
     tipoUsuario: "Tecnico",
   }, function(err, foundUser) {
     console.log(foundUser)
-      res.render("ordemPreventivaCriar", {
-        listaDeUsuarios: foundUser
-      });
+    res.render("ordemPreventivaCriar", {
+      listaDeUsuarios: foundUser
+    });
   });
 });
 
@@ -119,9 +119,9 @@ app.get("/consultarPreventivas", function(req, res) {
     tipoUsuario: "Tecnico",
   }, function(err, foundUser) {
     console.log(foundUser)
-      res.render("consultarPreventivas", {
-        listaDeUsuarios: foundUser
-      });
+    res.render("consultarPreventivas", {
+      listaDeUsuarios: foundUser
+    });
   });
 
 });
@@ -132,9 +132,9 @@ app.get("/resultadoPreventivas", function(req, res) {
     tipoUsuario: "Tecnico",
   }, function(err, foundUser) {
     console.log(foundUser)
-      res.render("resultadoPreventivas", {
-        listaDeUsuarios: foundUser
-      });
+    res.render("resultadoPreventivas", {
+      listaDeUsuarios: foundUser
+    });
   });
 });
 
@@ -503,14 +503,14 @@ app.post("/deleteUser", function(req, res) {
   const listaUsuariosSelect = req.body.listaUsuariosSelect;
   console.log(listaUsuariosSelect);
   User.findOneAndDelete({
-      login: listaUsuariosSelect
-    }, function(err){
-    if(!err){
+    login: listaUsuariosSelect
+  }, function(err) {
+    if (!err) {
       console.log("Sucesso!");
       //redireciona para atualizar a página
       res.render("consultarEditarUsuarios");
-    } else{
-        res.send("Erro!");
+    } else {
+      res.send("Erro!");
     }
   })
 });
@@ -1079,8 +1079,8 @@ app.post("/resultadoOrdens", function(req, res) {
   const responsavelOrdem = req.body.responsavelOrdem;
   if (responsavelOrdem != "") {
     Ordem.updateOne({
-      numeroOrdem: req.body.numeroOrdem
-    }, {
+        numeroOrdem: req.body.numeroOrdem
+      }, {
         responsavel: req.body.responsavelOrdem
       },
       function(err) {
@@ -1115,7 +1115,7 @@ app.post("/resultadoOrdens", function(req, res) {
   const horaFechamento = req.body.horaFechamento;
   if (horaFechamento != "") {
     Ordem.updateOne({
-      numeroOrdem: req.body.numeroOrdem
+        numeroOrdem: req.body.numeroOrdem
       }, {
         horaFinal: req.body.horaFechamento
       },
@@ -1173,7 +1173,9 @@ const ordemPreventivaSchema = {
   maquinaPreventiva: String,
   dataInicialPreventiva: Date,
   frequenciaPreventiva: String,
-  tarefasPreventiva: {type: [String]},
+  tarefasPreventiva: {
+    type: [String]
+  },
   responsavelPreventiva: String
 
 };
@@ -1193,7 +1195,7 @@ app.post("/ordemPreventivaCriar", function(req, res) {
     tarefasPreventiva: req.body.lista
 
   });
-var teste = req.body.listaPreventiva;
+  var teste = req.body.listaPreventiva;
   console.log(teste);
 
   newOrdemPreventiva.save(function(err) {
@@ -1206,63 +1208,77 @@ var teste = req.body.listaPreventiva;
     }
   });
 
-  });
+});
 
-  //---------------------------------------- pesquisar ordem preventiva ------------------------------------------------------//
-  app.post("/consultarPreventivas", function(req, res) {
-      const tituloOrdemPreventiva = req.body.tituloOrdemPreventiva;
-      const maquinaOrdem = req.body.maquinaOrdem;
-      const dataOrdem = req.body.dataOrdem;
-      const responsavelOrdem = req.body.responsavelOrdem;
-      const frequencia = req.body.flexRadioDefault;
-
-
-
-      //inicia procura pelos parâmetros passados
+//---------------------------------------- pesquisar ordem preventiva ------------------------------------------------------//
+app.post("/consultarPreventivas", function(req, res) {
+  const tituloOrdemPreventiva = req.body.tituloOrdemPreventiva;
+  const maquinaOrdem = req.body.maquinaOrdem;
+  const dataOrdem = req.body.dataOrdem;
+  const responsavelOrdem = req.body.responsavelOrdem;
+  const frequencia = req.body.flexRadioDefault;
 
 
 
-      if (tituloOrdemPreventiva != "") {
-        console.log(tituloOrdemPreventiva);
+  //inicia procura pelos parâmetros passados
 
+  if (tituloOrdemPreventiva != "") {
+    console.log(tituloOrdemPreventiva);
+    Preventiva.find({
+      codigoPreventiva: tituloOrdemPreventiva,
+    }, function(err, foundPreventiva) {
+      if (foundPreventiva) {
+        //res.send(foundPreventiva)
+        console.log(foundPreventiva)
+        res.render("resultadoPreventivas", {
+          listaDeOrdensPreventivas: foundPreventiva,
+        });
+        console.log(foundPreventiva);
+      } else {
+        console.log("No preventiva found")
+      }
+    });
 
-
-
+  } else {
+    if (maquinaOrdem != "") {
+      console.log(maquinaOrdem);
+      Preventiva.find({
+        maquinaPreventiva: maquinaOrdem,
+      }, function(err, foundPreventiva) {
+        if (foundPreventiva) {
+          //res.send(foundPreventiva)
+          res.render("resultadoPreventivas", {
+            listaDeOrdensPreventivas: foundPreventiva
+          });
+          console.log(foundPreventiva);
+        } else {
+          console.log("No preventiva found")
+        }
+      });
+    } else {
+      if (responsavelOrdem != "") {
+        console.log(responsavelOrdem);
         Preventiva.find({
-          codigoPreventiva: tituloOrdemPreventiva,
+          responsavelPreventiva: responsavelOrdem,
         }, function(err, foundPreventiva) {
           if (foundPreventiva) {
-
-
-            //res.send(foundPreventiva)
-            console.log(foundPreventiva)
-
-
-
+            //  res.send(foundPreventiva)
             res.render("resultadoPreventivas", {
-
-              listaDeOrdensPreventivas: foundPreventiva,
-
-
+              listaDeOrdensPreventivas: foundPreventiva
             });
-
             console.log(foundPreventiva);
           } else {
             console.log("No preventiva found")
           }
         });
-
-
-
-
       } else {
-        if (maquinaOrdem != "") {
-          console.log(maquinaOrdem);
+        if (frequencia != "") {
+          console.log(frequencia);
           Preventiva.find({
-            maquinaPreventiva: maquinaOrdem,
+            frequenciaPreventiva: frequencia,
           }, function(err, foundPreventiva) {
             if (foundPreventiva) {
-              //res.send(foundPreventiva)
+              //  res.send(foundPreventiva)
               res.render("resultadoPreventivas", {
                 listaDeOrdensPreventivas: foundPreventiva
               });
@@ -1272,44 +1288,12 @@ var teste = req.body.listaPreventiva;
             }
           });
         } else {
-            if (responsavelOrdem != "") {
-              console.log(responsavelOrdem);
-              Preventiva.find({
-                responsavelPreventiva: responsavelOrdem,
-              }, function(err, foundPreventiva) {
-                if (foundPreventiva) {
-                //  res.send(foundPreventiva)
-                  res.render("resultadoPreventivas", {
-                    listaDeOrdensPreventivas: foundPreventiva
-                  });
-                  console.log(foundPreventiva);
-                } else {
-                  console.log("No preventiva found")
-                }
-              });
-            } else {
-              if (frequencia != "") {
-                console.log(frequencia);
-                Preventiva.find({
-                  frequenciaPreventiva: frequencia,
-                }, function(err, foundPreventiva) {
-                  if (foundPreventiva) {
-                  //  res.send(foundPreventiva)
-                    res.render("resultadoPreventivas", {
-                      listaDeOrdensPreventivas: foundPreventiva
-                    });
-                    console.log(foundPreventiva);
-                  } else {
-                    console.log("No preventiva found")
-                  }
-                });
-              } else {
-                res.send("Nenhum dado inserido para pesquisa!")
-              }
-            }
-          }
+          res.send("Nenhum dado inserido para pesquisa!")
         }
-    });
+      }
+    }
+  }
+});
 
 //------------------------------------------------------atualizar preventiva------------------------------------------------------------------//
 app.post("/resultadoPreventivas", function(req, res) {
@@ -1368,6 +1352,67 @@ app.post("/resultadoPreventivas", function(req, res) {
 
 
 });
+
+///////////////////////////////////////////// cadastrar máquinas /////////////////////////////////////
+const maquinaSchema = {
+  idMaquina: String,
+  nomeMaquina: String,
+  descricaoMaquina: String,
+  turnoTrabalho: String,
+  setorMaquina: String,
+  tecnicoMaquina: String,
+  criticidadeMaquina: Number,
+  dataInstalacaoMaquina: Date,
+  itensCriticos: {
+    type: [String]
+  },
+};
+
+const Maquina = new mongoose.model("Maquina", maquinaSchema);
+
+app.post("/cadastrarMaquinas", function(req, res) {
+
+  const idMaquina = req.body.idMaquina;
+  const nomeMaquina = req.body.nomeMaquina;
+  const descricaoMaquina = req.body.descricaoMaquina;
+  const flexRadioDefault = req.body.flexRadioDefault;
+  const setorMaquina = req.body.setorMaquina;
+  const tecnicoMaquina = req.body.tecnicoMaquina;
+  const criticidadeMaquina = req.body.criticidadeMaquina;
+  const dataInstalacao = req.body.dataInstalacao;
+  const itensCriticos = [];
+  itensCriticos  = req.body.itensCriticos;
+
+  const newMaquina = new Maquina({
+
+    idMaquina: req.body.idMaquina,
+    nomeMaquina: req.body.nomeMaquina,
+    descricaoMaquina: req.body.descricaoMaquina,
+    turnoTrabalho: req.body.flexRadioDefault,
+    setorMaquina: req.body.setorMaquina,
+    tecnicoMaquina: req.body.tecnicoMaquina,
+    criticidadeMaquina: req.body.criticidadeMaquina,
+    dataInstalacaoMaquina: req.body.dataInstalacao,
+    itensCriticos: req.body.itensCriticos,
+  });
+
+
+
+
+  newMaquina.save(function(err) {
+    if (err) {
+      console.log("A máquina não foi salva");
+    } else {
+      console.log("Nova máquina salva!");
+      res.send("Nova máquina salva com sucesso no cadastro");
+    }
+  });
+
+
+});
+
+
+
 
 
 //____________________________________________________________________________________________________________________________________________________
