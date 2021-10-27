@@ -498,6 +498,24 @@ app.post("/resultadoUsuarios", function(req, res) {
 
 });
 
+//////////////////////////////// deletar usuario selecionado//////////////////////////////////
+app.post("/deleteUser", function(req, res) {
+  const listaUsuariosSelect = req.body.listaUsuariosSelect;
+  console.log(listaUsuariosSelect);
+  User.findOneAndDelete({
+      login: listaUsuariosSelect
+    }, function(err){
+    if(!err){
+      console.log("Sucesso!");
+      //redireciona para atualizar a página
+      res.render("consultarEditarUsuarios");
+    } else{
+        res.send("Erro!");
+    }
+  })
+});
+
+
 
 //////////////////////////// alterações para salvar itens da pagina Inventário no banco de dados////////////////////////////////
 
