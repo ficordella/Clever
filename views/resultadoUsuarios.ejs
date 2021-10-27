@@ -101,7 +101,7 @@
 
           <p class="usuariosCabecalho">Editar usuário:</p>
           <div class="input-group rounded">
-            <input type="text" name="loginProcurado" class="form-control rounded" placeholder="Insira o login do usuário para poder atualizar os dados" aria-label="Nome de usuário" aria-describedby="search-addon" id="procurarNomeUsuario" required/>
+            <input type="text" name="loginProcurado" class="form-control rounded" placeholder="Insira o login do usuário para poder atualizar os dados" aria-label="Nome de usuário" aria-describedby="search-addon" id="procurarNomeUsuario" required />
             <span class="input-group-text border-0">
               <i class="fas fa-search"></i>
             </span>
@@ -139,34 +139,34 @@
           <br>
 
           <div class="mb-3">
-          <label class ="form-label">Tipo de usuário: </label>
+            <label class="form-label">Tipo de usuário: </label>
           </div>
           <table style="table-layout: fixed; width: 100%;">
             <tr>
               <td style="width:25%;">
                 <div class="form-check">
-                <input class="form-check-input" type="radio" value="Administrador" name="flexRadioDefault" id="tipoAdministrador">
-                <label class="form-check-label" for="tipoAdministrador">
-                  Administrador
-                </label>
-              </div>
+                  <input class="form-check-input" type="radio" value="Administrador" name="flexRadioDefault" id="tipoAdministrador">
+                  <label class="form-check-label" for="tipoAdministrador">
+                    Administrador
+                  </label>
+                </div>
 
               </td>
               <td style="width:25%;">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Tecnico" name="flexRadioDefault" id="tipoTecnico" >
+                  <input class="form-check-input" type="radio" value="Tecnico" name="flexRadioDefault" id="tipoTecnico">
                   <label class="form-check-label" for="tipoTecnico">
                     Técnico
                   </label>
-                  </div>
+                </div>
               </td>
               <td style="width:25%;">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario" >
+                  <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario">
                   <label class="form-check-label" for="tipoUsuario">
                     Usuário
                   </label>
-              </div>
+                </div>
               </td>
             </tr>
           </table>
@@ -178,48 +178,35 @@
           </div>
 
       </div>
-</form>
+      </form>
 
       <div class="conteudoDireitoUsuario">
         <div class="resultadoUsuarios">
 
+          <form action="/deleteUser" method="post">
+            <div class="form-group">
+              <p class="usuariosCabecalho">Lista de usuários encontrados:</p>
 
-          <div class="form-group">
-            <p class="usuariosCabecalho">Lista de usuários encontrados:</p>
+              <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
+              <select multiple class="form-control" id="resultadoItens" onchange="editar(this)" name="listaUsuariosSelect">
+                <% listaDeUsuarios.forEach(function(user) { %>
 
-            <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
-            <select multiple class="form-control" id="resultadoItens" onchange="editar(this)">
-              <% listaDeUsuarios.forEach(function(user) { %>
+                <option value="<%= user.login %>"><%= "Login: "+  user.login + ", " + user.email + ", "+user.nomeCompleto + ", "+ user.tipoUsuario %></option>
 
-              <option value=""><%= "Login: "+  user.login + ", " + user.email + ", "+user.nomeCompleto + ", "+ user.tipoUsuario %></option>
+                <%  }); %>
+              </select>
+              <div id="pesquisaUsuariosHelp" class="form-text">Selecione o usuário que deseja excluir</div>
+              <br>
+              <br>
 
-              <%  }); %>
-            </select>
-            <div id="pesquisaUsuariosHelp" class="form-text">Selecione o usuário que deseja excluir</div>
-            <br>
-
-            <form action="/resultadosItens" method="post">
-
-
-            <div class="mb-3">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="todosItens" id="todosItens" value="true">
-                <label class="form-check-label" for="todosItens">
-                  Deletar todos?
-                </label>
-                <div id="todosItensHelp" class="form-text">Se marcado esse campo, a seleção vai deletar todos os usuários pesquisados</div>
-              </div>
             </div>
-            </form>
-
-          </div>
         </div>
 
         <div class="btn-usuarioDireito">
 
           <a href="consultarEditarUsuarios" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
-          <button type="button" class="btn btn-primary" onclick="removeOption()"><i class="fas fa-trash-alt"></i> Excluir</button>
-
+          <button type="submit" class="btn btn-primary"><i class="fas fa-trash-alt"></i> Excluir</button>
+          </form>
         </div>
       </div>
 
