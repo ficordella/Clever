@@ -97,8 +97,23 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-        <form id="usuarioForm" action="/cadastrarUsuarioInternal" method="post">
-      <div class="conteudoEsquerdoUsuario">
+        <form id="usuarioForm" action="/excluirMaquinas" method="post">
+      <div class="conteudoEsquerdoMaquinas">
+        <div class="mb-3">
+        <label class ="form-label">Maquinas cadastradas: </label>
+          <div id="maquinaHelp" class="form-text">Selecione a máquina que deseja excluir.</div>
+        </div>
+          <% listaDeMaquinas.forEach(function(maquina) { %>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" value="<%= maquina.idMaquina %>" name="flexRadioDefault" >
+        <label class="form-check-label" for="tipoAdministrador">
+        <%=  "ID: "+  maquina.idMaquina + ", Nome: " + maquina.nomeMaquina + ", Descrição: " + maquina.descricaoMaquina + ", Setor: " + maquina.setorMaquina %>
+        </label>
+      </div>
+      <br>
+      <%  }); %>
+
+        <button type = submit class="btn btn-primary"><i class="fas fa-trash-alt"></i> Excluir</button>
 
 
 
