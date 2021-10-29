@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public")); // função para usar o CSS e JS
 
-//mongoose.connect("mongodb://localhost:27017/cleverDB");
+mongoose.connect("mongodb://localhost:27017/cleverDB");
 //estabelecer comunicação com o mongodb cloud
-mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
+//mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
 
 app.get("/", function(req, res) { //função para renderizar a pagina de login
 
@@ -151,7 +151,13 @@ app.get("/processoMaquinas", function(req, res) {
 });
 
 app.get("/excluirMaquinas", function(req, res) {
-  res.render("excluirMaquinas");
+  Maquina.find({}, function(err, foundMaquina) {
+    console.log(foundMaquina)
+    res.render("excluirMaquinas", {
+      listaDeMaquinas: foundMaquina
+    });
+  });
+
 });
 
 app.get("/resultadoMaquinas", function(req, res) {
@@ -1372,16 +1378,13 @@ const Maquina = new mongoose.model("Maquina", maquinaSchema);
 
 app.post("/cadastrarMaquinas", function(req, res) {
 
-  const idMaquina = req.body.idMaquina;
-  const nomeMaquina = req.body.nomeMaquina;
-  const descricaoMaquina = req.body.descricaoMaquina;
-  const flexRadioDefault = req.body.flexRadioDefault;
-  const setorMaquina = req.body.setorMaquina;
-  const tecnicoMaquina = req.body.tecnicoMaquina;
-  const criticidadeMaquina = req.body.criticidadeMaquina;
-  const dataInstalacao = req.body.dataInstalacao;
-  const itensCriticos = [];
-  itensCriticos  = req.body.itensCriticos;
+  /*const lista = [];
+
+  const arr = req.body.listaDeItensMaquina;
+  arr.forEach(element => {
+    console.log(element);
+    lista.push(element);
+  });*/
 
   const newMaquina = new Maquina({
 
@@ -1393,7 +1396,7 @@ app.post("/cadastrarMaquinas", function(req, res) {
     tecnicoMaquina: req.body.tecnicoMaquina,
     criticidadeMaquina: req.body.criticidadeMaquina,
     dataInstalacaoMaquina: req.body.dataInstalacao,
-    itensCriticos: req.body.itensCriticos,
+    itensCriticos: req.body.listaItensCriticos,
   });
 
 
@@ -1410,6 +1413,26 @@ app.post("/cadastrarMaquinas", function(req, res) {
 
 
 });
+
+//////////////////////////////// função para excluirMaquinas /////////////////
+
+app.post("/excluirMaquinas", function(req, res) {
+
+  const flexRadioDefault = req.body.flexRadioDefault;
+  console.log(flexRadioDefault);
+  Maquina.findOneAndDelete({
+    idMaquina: flexRadioDefault
+  }, function(err) {
+    if (!err) {
+      console.log("Sucesso!");
+      res.send("Máquina excluida do cadastro com sucesso!")
+      //res.render("excluirMaquinas");
+    } else {
+      res.send("Erro!");
+    }
+  })
+
+})
 
 
 
