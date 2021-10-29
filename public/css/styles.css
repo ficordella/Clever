@@ -385,3 +385,9 @@ position: absolute;
   height: 445px;
 
 }
+
+.conteudoEsquerdoMaquinas{
+  padding: 15px;
+  position:absolute;
+  width: 100%;
+}
