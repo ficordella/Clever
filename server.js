@@ -15,9 +15,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public")); // função para usar o CSS e JS
 
-mongoose.connect("mongodb://localhost:27017/cleverDB");
+//mongoose.connect("mongodb://localhost:27017/cleverDB");
 //estabelecer comunicação com o mongodb cloud
-//mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
+mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
 
 app.get("/", function(req, res) { //função para renderizar a pagina de login
 
