@@ -163,15 +163,18 @@
 
         </div>
         <div class="conteudoDireitoUsuario">
+          
           <div class="mb-3">
             <label for="tecnicoMaquina" class="form-label">Responsável técnico pela máquina</label>
 
-            <select class="form-select" name="tecnicoMaquina">
-              <option value = "" selected>Selecione nome do responsável técnico pela máquina</option>
-              <option value="Filipe Cordella">Filipe Cordella</option>
+            <select class="form-select" name="tecnicoMaquina" >
+              <option value = "" selected>Selecione o nome do responsável pela máquina.</option>
+              <% listaDeUsuarios.forEach(function(user) { %>
+              <option><%= user.nomeCompleto %></option>
+              <%  }); %>
 
             </select>
-            <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável pela máquina.</div>
+            <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável técnico da ordem preventiva.</div>
           </div>
 
           <div class="mb-3">
@@ -218,16 +221,16 @@
                   option.text = document.getElementById("task").value;
                   option.value = document.getElementById("task").value;
                   x.add(option);
-                  listaTarefasPreventivas.push(option.value);
-                  document.getElementById("task").value = "";
-                  //alert(listaTarefasPreventivas);
+                  listaDeItensMaquina.push(option.value);
+                  document.getElementById('task').value = "";
+                  alert(listaDeItensMaquina);
                 }
 
                 //remover usuario selecionado na caixa de opções
                 function removeItem() {
                   var x = document.getElementById("listaItensCriticos");
                   x.remove(x.selectedIndex);
-                  listaTarefasPreventivas.pop(x.selectedIndex);
+                  listaDeItensMaquina.pop(x.selectedIndex);
 
                 }
              </script>
