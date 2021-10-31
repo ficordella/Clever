@@ -103,10 +103,11 @@
           <div class="mb-3">
 
             <label for="idMaquina" class="form-label">ID Máquina</label>
-            <select class="form-select" name="idMaquina">
+            <select class="form-select" name="idMaquina" required>
               <option value="" selected>Selecione a máquina que deseja editar</option>
-              <option value=""></option>
-
+              <% listaDeMaquinas.forEach(function(maquina) { %>
+              <option value="<%= maquina.idMaquina %>"><%= maquina.idMaquina %></option>
+                <%  }); %>
             </select>
 
           </div>
@@ -128,7 +129,7 @@
           <div class="mb-3">
           <label class ="form-label">Turno de trabalho: </label>
 
-          <select class="form-select" name="setorMaquina">
+          <select class="form-select" name="turnoTrabalho">
             <option value = "" selected>Selecione o turno de trabalho da máquina</option>
             <option value = "A" >Turno A 06:00 - 14:00</option>
             <option value = "B">Turno B 14:00 - 22:00</option>
@@ -153,15 +154,8 @@
           </div>
 
           <div class="mb-3">
-            <label for="tecnicoMaquina" class="form-label">Responsável técnico pela máquina</label>
-
-            <select class="form-select" name="tecnicoMaquina">
-              <option value="" selected>Selecione o nome do responsável pela máquina.</option>
-              <% listaDeUsuarios.forEach(function(user) { %>
-              <option><%= user.nomeCompleto %></option>
-              <%  }); %>
-
-            </select>
+            <label for="tecnicoMaquina" class="form-label">Nome do técnico responsável</label>
+            <input type="text" class="form-control" id="nomeCompletoUsuario" name="tecnicoMaquina" aria-describedby="nomeHelp">
 
           </div>
 
@@ -195,33 +189,36 @@
 
           <table lass="table table-borderless">
 
+            <% listaDeMaquinas.forEach(function(maquina) { %>
+
             <tr>
-              <td><b>ID da máquina: </b> </td>
+              <td><b>ID da máquina: </b><%= maquina.idMaquina %> </td>
             </tr>
             <tr>
-              <td><b>Nome da máquina: </b></td>
+              <td><b>Nome da máquina: </b><%= maquina.nomeMaquina %></td>
             </tr>
 
             <tr>
-              <td><b>Descrição: </b> </td>
+              <td><b>Descrição: </b><%= maquina.descricaoMaquina %> </td>
             </tr>
             <tr>
-              <td><b>Setor: </b></td>
+              <td><b>Setor: </b><%= maquina.setorMaquina %></td>
             </tr>
             <tr>
-              <td><b>Técnico responsável: </b></td>
+              <td><b>Técnico responsável: </b> <%= maquina.tecnicoMaquina %> </td>
             </tr>
             <tr>
-              <td><b>Criticidade: </b></td>
+              <td><b>Criticidade: </b><%= maquina.criticidadeMaquina %></td>
             </tr>
             <tr>
-              <td><b>Turno de trabalho: </b></td>
+              <td><b>Turno de trabalho: </b><%= maquina.turnoTrabalho %></td>
             </tr>
             <tr>
-              <td><b>Data de implementação: </b></td>
+              <td><b>Data de implementação: </b><%= maquina.dataInstalacaoMaquina.toDateString() %><p><br></p></td>
             </tr>
-            <br>
 
+
+            <%  }); %>
           </table>
 
         </div>
