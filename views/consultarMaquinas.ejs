@@ -97,14 +97,135 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-        <form id="usuarioForm" action="/cadastrarUsuarioInternal" method="post">
-      <div class="conteudoEsquerdoUsuario">
+      <form id="maquinaForm" action="/consultarMaquinas" method="post">
+        <div class="conteudoEsquerdoUsuario">
+
+          <div class="mb-3">
+            <label for="idMaquina" class="form-label">ID Máquina</label>
+            <input type="text" class="form-control" id="idMaquina" name="idMaquina" maxlength="15" onkeyup="this.value = this.value.toUpperCase();">
+            <div id="nomeUsuarioHelp" class="form-text">Insira o ID da máquina sem espaços</div>
+          </div>
+
+          <div class="mb-3">
+          <label class ="form-label">Turno de trabalho: </label>
+
+          </div>
+          <table class="table table-borderless">
+            <tr>
+              <td>
+                <div class="form-check">
+                <input class="form-check-input" type="radio" value="A" name="flexRadioDefault" id="turnoA" >
+                <label class="form-check-label" for="tipoAdministrador">
+                  Turno A 06:00 - 14:00
+                </label>
+              </div>
+            </td>
+
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="B" name="flexRadioDefault" id="turnoB" >
+                  <label class="form-check-label" for="tipoTecnico">
+                    Turno B 14:00 - 22:00
+                  </label>
+                  </div>
+              </td>
+
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="C" name="flexRadioDefault" id="turnoC" >
+                  <label class="form-check-label" for="tipoUsuario">
+                    Turno C 22:00 - 06:00
+                  </label>
+              </div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="mb-3">
+
+            <label for="setorMaquina" class="form-label">Setor</label>
+            <select class="form-select" name="setorMaquina">
+              <option value = "" selected>Selecione o setor da máquina</option>
+              <option >Usinagem</option>
+              <option >Teste</option>
+              <option >Pintura</option>
+
+            </select>
+            <div id="setorOrdemHelp" class="form-text">Insira o setor da máquina.</div>
+
+          </div>
+
+          <div class="mb-3">
+            <label for="tecnicoMaquina" class="form-label">Responsável técnico pela máquina</label>
+
+            <select class="form-select" name="tecnicoMaquina" >
+              <option value = "" selected>Selecione o nome do responsável pela máquina.</option>
+              <% listaDeUsuarios.forEach(function(user) { %>
+              <option><%= user.nomeCompleto %></option>
+              <%  }); %>
+
+            </select>
+            <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável técnico da máquina.</div>
+          </div>
+
+          <div class="mb-3">
+
+            <label for="criticidadeMaquina" class="form-label">Criticidade da máquina</label>
+            <select class="form-select" name="criticidadeMaquina">
+              <option value = "" selected>Selecione a criticidade da máquina</option>
+              <option value = "1">1</option>
+              <option value = "2">2</option>
+              <option value = "3">3</option>
+              <option value = "4">4</option>
+              <option value = "5">5</option>
+
+            </select>
+            <div id="setorOrdemHelp" class="form-text">Selecione de 1 a 5, sendo 1 muito critica e 5 não crítica.</div>
+
+          </div>
+
+          <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Pesquisar</button>
+          <a href="cadastrarMaquinas" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+
+        </div>
 
 
 
-      </div>
       <div class="conteudoDireitoUsuario">
+        <div class="mb-3">
+          <label for="tecnicoMaquina" class="form-label">Resultado da pesquisa:</label>
+        </div>
 
+        <table lass="table table-borderless">
+
+        <tr>
+           <td><b>ID da máquina: </b>  </td>
+        </tr>
+        <tr>
+          <td><b>Nome da máquina: </b></td>
+        </tr>
+
+        <tr>
+          <td><b>Descrição: </b> </td>
+        </tr>
+        <tr>
+          <td><b>Setor: </b></td>
+        </tr>
+        <tr>
+          <td><b>Técnico responsável: </b></td>
+        </tr>
+        <tr>
+          <td><b>Criticidade: </b></td>
+        </tr>
+        <tr>
+          <td><b>Turno de trabalho: </b></td>
+        </tr>
+        <tr>
+          <td><b>Data de implementação: </b></td>
+        </tr>
+        <br>
+
+        </table>
 
       </div>
     </form>
