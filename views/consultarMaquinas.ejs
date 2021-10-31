@@ -107,39 +107,24 @@
           </div>
 
           <div class="mb-3">
+              <label for="nomeMaquina" class="form-label">Nome completo da máquina</label>
+              <input type="text" class="form-control" id="nomeCompletoUsuario" name="nomeMaquina" aria-describedby="nomeHelp">
+              <div id="nomeHelp" class="form-text">Por favor digite o nome completo da máquina</div>
+            </div>
+
+          <div class="mb-3">
           <label class ="form-label">Turno de trabalho: </label>
 
+          <select class="form-select" name="setorMaquina">
+            <option value = "" selected>Selecione o turno de trabalho da máquina</option>
+            <option value = "A" >Turno A 06:00 - 14:00</option>
+            <option value = "B">Turno B 14:00 - 22:00</option>
+            <option value = "C">Turno C 22:00 - 06:00</option>
+
+          </select>
+
           </div>
-          <table class="table table-borderless">
-            <tr>
-              <td>
-                <div class="form-check">
-                <input class="form-check-input" type="radio" value="A" name="flexRadioDefault" id="turnoA" >
-                <label class="form-check-label" for="tipoAdministrador">
-                  Turno A 06:00 - 14:00
-                </label>
-              </div>
-            </td>
 
-              <td>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="B" name="flexRadioDefault" id="turnoB" >
-                  <label class="form-check-label" for="tipoTecnico">
-                    Turno B 14:00 - 22:00
-                  </label>
-                  </div>
-              </td>
-
-              <td>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" value="C" name="flexRadioDefault" id="turnoC" >
-                  <label class="form-check-label" for="tipoUsuario">
-                    Turno C 22:00 - 06:00
-                  </label>
-              </div>
-              </td>
-            </tr>
-          </table>
 
           <div class="mb-3">
 
@@ -151,9 +136,7 @@
               <option >Pintura</option>
 
             </select>
-            <div id="setorOrdemHelp" class="form-text">Insira o setor da máquina.</div>
-
-          </div>
+              </div>
 
           <div class="mb-3">
             <label for="tecnicoMaquina" class="form-label">Responsável técnico pela máquina</label>
@@ -165,8 +148,7 @@
               <%  }); %>
 
             </select>
-            <div id="responsavelOrdemHelp" class="form-text">Selecione o nome do responsável técnico da máquina.</div>
-          </div>
+                </div>
 
           <div class="mb-3">
 
