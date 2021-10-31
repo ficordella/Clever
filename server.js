@@ -139,12 +139,30 @@ app.get("/resultadoPreventivas", function(req, res) {
 });
 
 app.get("/cadastrarMaquinas", function(req, res) {
-  res.render("cadastrarMaquinas");
+  //res.render("cadastrarMaquinas");
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+    res.render("cadastrarMaquinas", {
+      listaDeUsuarios: foundUser
+    });
+  });
 });
 
 app.get("/consultarMaquinas", function(req, res) {
-  res.render("consultarMaquinas");
+  //res.render("consultarMaquinas");
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+    res.render("consultarMaquinas", {
+      listaDeUsuarios: foundUser
+    });
+  });
 });
+
+
 
 app.get("/processoMaquinas", function(req, res) {
   res.render("processoMaquinas");
@@ -161,7 +179,14 @@ app.get("/excluirMaquinas", function(req, res) {
 });
 
 app.get("/resultadoMaquinas", function(req, res) {
-  res.render("resultadoMaquinas");
+  User.find({
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser)
+    res.render("resultadoMaquinas", {
+      listaDeUsuarios: foundUser
+    });
+  });
 });
 
 
@@ -1379,7 +1404,6 @@ const Maquina = new mongoose.model("Maquina", maquinaSchema);
 app.post("/cadastrarMaquinas", function(req, res) {
 
   /*const lista = [];
-
   const arr = req.body.listaDeItensMaquina;
   arr.forEach(element => {
     console.log(element);
@@ -1426,7 +1450,6 @@ app.post("/excluirMaquinas", function(req, res) {
     if (!err) {
       console.log("Sucesso!");
       res.send("Máquina excluida do cadastro com sucesso!")
-      //res.render("excluirMaquinas");
     } else {
       res.send("Erro!");
     }
@@ -1436,7 +1459,7 @@ app.post("/excluirMaquinas", function(req, res) {
 
 
 
-
+//https://mongoosejs.com/docs/queries.html explicação das queries usando where
 
 //____________________________________________________________________________________________________________________________________________________
 
