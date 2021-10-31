@@ -189,6 +189,10 @@ app.get("/resultadoMaquinas", function(req, res) {
   });
 });
 
+app.get("/mensagemSucesso", function(req, res) {
+  res.render("mensagemSucesso");
+});
+
 
 //função para o banco de dados do registro de usuário
 // construtor para salvar o usuário no banco de dados
@@ -1457,7 +1461,255 @@ app.post("/excluirMaquinas", function(req, res) {
 
 })
 
+///////////////////////////////// funções para pesquisa de máquinas ///////////////////////////////
+app.post("/consultarMaquinas", function(req, res) {
+  const idMaquina = req.body.idMaquina;
+  const nomeMaquina = req.body.nomeMaquina;
+  const turnoMaquina = req.body.turnoMaquina;
+  const setorMaquina = req.body.setorMaquina;
+  const tecnicoMaquina = req.body.tecnicoMaquina;
+  const criticidadeMaquina = req.body.criticidadeMaquina;
 
+  //inicia procura pelos parâmetros passados
+
+  if (idMaquina != "") {
+    console.log(idMaquina);
+    Maquina.find({
+      idMaquina: idMaquina,
+    }, function(err, foundMaquina) {
+      if (foundMaquina) {
+        //res.send(foundPreventiva)
+        console.log(foundMaquina)
+        res.render("resultadoMaquinas", {
+          listaDeMaquinas: foundMaquina,
+        });
+        console.log(foundMaquina);
+      } else {
+        console.log("No maquina found")
+      }
+    });
+
+  } else {
+    if (nomeMaquina != "") {
+      console.log(nomeMaquina);
+      Maquina.find({
+        nomeMaquina: nomeMaquina,
+      }, function(err, foundMaquina) {
+        if (foundMaquina) {
+          //res.send(foundPreventiva)
+          console.log(foundMaquina)
+          res.render("resultadoMaquinas", {
+            listaDeMaquinas: foundMaquina,
+          });
+          console.log(foundMaquina);
+        } else {
+          console.log("No maquina found")
+        }
+      });
+
+    } else {
+      if (turnoMaquina != "") {
+        console.log(turnoMaquina);
+        Maquina.find({
+          turnoTrabalho: turnoMaquina,
+        }, function(err, foundMaquina) {
+          if (foundMaquina) {
+            //res.send(foundPreventiva)
+            console.log(foundMaquina)
+            res.render("resultadoMaquinas", {
+              listaDeMaquinas: foundMaquina,
+            });
+            console.log(foundMaquina);
+          } else {
+            console.log("No maquina found")
+          }
+        });
+
+      }else {
+        if (setorMaquina != "") {
+          console.log(setorMaquina);
+          Maquina.find({
+            setorMaquina: setorMaquina,
+          }, function(err, foundMaquina) {
+            if (foundMaquina) {
+              //res.send(foundPreventiva)
+              console.log(foundMaquina)
+              res.render("resultadoMaquinas", {
+                listaDeMaquinas: foundMaquina,
+              });
+              console.log(foundMaquina);
+            } else {
+              console.log("No maquina found")
+            }
+          });
+
+        } else {
+          if (tecnicoMaquina != "") {
+            console.log(tecnicoMaquina);
+            Maquina.find({
+              tecnicoMaquina: tecnicoMaquina,
+            }, function(err, foundMaquina) {
+              if (foundMaquina) {
+                //res.send(foundPreventiva)
+                console.log(foundMaquina)
+                res.render("resultadoMaquinas", {
+                  listaDeMaquinas: foundMaquina,
+                });
+                console.log(foundMaquina);
+              } else {
+                console.log("No maquina found")
+              }
+            });
+
+          }
+          else {
+            if (criticidadeMaquina != "") {
+              console.log(criticidadeMaquina);
+              Maquina.find({
+                criticidadeMaquina: criticidadeMaquina,
+              }, function(err, foundMaquina) {
+                if (foundMaquina) {
+                  //res.send(foundPreventiva)
+                  console.log(foundMaquina)
+                  res.render("resultadoMaquinas", {
+                    listaDeMaquinas: foundMaquina,
+                  });
+                  console.log(foundMaquina);
+                } else {
+                  console.log("No maquina found")
+                }
+              });
+
+            }
+
+           else {
+          res.send("Nenhum dado inserido para pesquisa!")
+        }
+      }
+    }
+    }
+  }
+  }
+});
+
+//////////////////////////// editar máquinas //////////////////////////////////
+
+app.post("/resultadoMaquinas", function(req, res) {
+
+  // atualiza o campo  nome da máquina
+  const nomeMaquina = req.body.nomeMaquina;
+  if (nomeMaquina != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        nomeMaquina: req.body.nomeMaquina
+      },
+      function(err) {
+        if (!err) {
+          res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+  // atualiza o campo  descrição da máquina
+  const descricaoMaquina  = req.body.descricaoMaquina;
+  if (descricaoMaquina != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        descricaoMaquina: req.body.descricaoMaquina
+      },
+      function(err) {
+        if (!err) {
+          res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+  // atualiza o campo  turno de trabalho da máquina
+  const turnoTrabalho  = req.body.turnoTrabalho;
+  if (turnoTrabalho != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        turnoTrabalho: req.body.turnoTrabalho
+      },
+      function(err) {
+        if (!err) {
+            res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+  // atualiza o campo  setor de trabalho da máquina
+  const setorMaquina = req.body.setorMaquina ;
+  if (setorMaquina != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        setorMaquina: req.body.setorMaquina
+      },
+      function(err) {
+        if (!err) {
+          res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+  // atualiza o técnico da máquina
+  const tecnicoMaquina = req.body.tecnicoMaquina ;
+  if (tecnicoMaquina != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        tecnicoMaquina: req.body.tecnicoMaquina
+      },
+      function(err) {
+        if (!err) {
+            res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+  // atualiza a criticidade da máquina
+  const criticidadeMaquina = req.body.criticidadeMaquina ;
+  if (criticidadeMaquina != "") {
+    Maquina.updateOne({
+        idMaquina: req.body.idMaquina
+      }, {
+        criticidadeMaquina: req.body.criticidadeMaquina
+      },
+      function(err) {
+        if (!err) {
+            res.render("mensagemSucesso")
+        } else {
+          res.send("erro, não foi possível fazer atualização da máquina selecionada");
+        }
+      }
+    );
+  }
+
+
+});
+
+
+
+///////////////////////////////////////////////////////////////////////////////
 
 //https://mongoosejs.com/docs/queries.html explicação das queries usando where
 
