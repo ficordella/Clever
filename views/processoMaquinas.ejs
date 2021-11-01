@@ -97,9 +97,56 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-        <form id="usuarioForm" action="/cadastrarUsuarioInternal" method="post">
+        <form id="usuarioForm" action="/processoMaquinas" method="post">
       <div class="conteudoEsquerdoUsuario">
+        <div class="mb-3">
 
+          <label for="idMaquina" class="form-label">ID Máquina</label>
+          <select class="form-select" name="idMaquina"  required>
+            <option value="" selected>Selecione a máquina que deseja adicionar o item para monitoramento</option>
+            <% listaDeMaquinas.forEach(function(maquina) { %>
+            <option value="<%= maquina.idMaquina %>"><%= maquina.idMaquina %></option>
+              <%  }); %>
+          </select>
+
+        </div>
+
+        <div class="mb-3">
+          <label for="idSensor" class="form-label" required>ID Sensor</label>
+          <input type="text" class="form-control" id="idSensor" name="idSensor" maxlength="15" onkeyup="this.value = this.value.toUpperCase();" aria-describedby="nomeHelp">
+          <div id="setorOrdemHelp" class="form-text">Insira o ID do sensor sem espaços.</div>
+
+        </div>
+
+        <div class="mb-3">
+
+          <label for="tipoSensor" class="form-label" required>Tipo de sensor</label>
+          <select class="form-select" name="tipoSensor" required>
+            <option value="" selected>Selecione o tipo de sensor para monitoramento</option>
+
+            <option value="Pressostato">Pressostato</option>
+            <option value="Termostato">Termostato</option>
+
+          </select>
+
+        </div>
+
+        <div class="mb-3">
+          <label for="limiteInferior" class="form-label" required>Limite Inferior</label>
+          <input type="number" class="form-control" id="limiteInferior" name="limiteInferior" aria-describedby="nomeHelp">
+          <div id="setorOrdemHelp" class="form-text">Insira o limite inferior de tolerância do sensor.</div>
+
+        </div>
+
+        <div class="mb-3">
+          <label for="limiteSuperior" class="form-label" required>Limite Superior</label>
+          <input type="number" class="form-control" id="limiteSuperior" name="limiteSuperior" aria-describedby="nomeHelp">
+          <div id="setorOrdemHelp" class="form-text">Insira o limite superior de tolerância do sensor.</div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+        <a href="consultarMaquinas" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
 
 
       </div>
