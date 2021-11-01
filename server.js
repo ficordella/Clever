@@ -165,7 +165,13 @@ app.get("/consultarMaquinas", function(req, res) {
 
 
 app.get("/processoMaquinas", function(req, res) {
-  res.render("processoMaquinas");
+  Maquina.find({}, function(err, foundMaquina) {
+    console.log(foundMaquina)
+    res.render("processoMaquinas", {
+      listaDeMaquinas: foundMaquina
+    });
+  });
+
 });
 
 app.get("/excluirMaquinas", function(req, res) {
@@ -1407,12 +1413,6 @@ const Maquina = new mongoose.model("Maquina", maquinaSchema);
 
 app.post("/cadastrarMaquinas", function(req, res) {
 
-  /*const lista = [];
-  const arr = req.body.listaDeItensMaquina;
-  arr.forEach(element => {
-    console.log(element);
-    lista.push(element);
-  });*/
 
   const newMaquina = new Maquina({
 
@@ -1709,7 +1709,50 @@ app.post("/resultadoMaquinas", function(req, res) {
 
 
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////cadastra sensores para monitoramento///////////////////////////////////////
+
+const sensorSchema = {
+  idMaquina: String,
+  idSensor: String,
+  tipoSensor: String,
+  limiteInferior: Number,
+  limiteSuperior: Number,
+}
+
+const Sensor = new mongoose.model("Sensor", sensorSchema);
+
+
+app.post("/processoMaquinas", function(req, res) {
+  const idMaquina = req.body.idMaquina ;
+  const idSensor = req.body.idSensor;
+  const tipoSensor = req.body.tipoSensor;
+  const limiteInferior = req.body.limiteInferior ;
+  const limiteSuperior = req.body.limiteSuperior ;
+
+  const newSensor = new Sensor({
+
+     idMaquina: req.body.idMaquina,
+     idSensor: req.body.idSensor,
+     tipoSensor: req.body.tipoSensor,
+     limiteInferior: req.body.limiteInferior,
+     limiteSuperior: req.body.limiteSuperior,
+  });
+
+
+
+
+  newSensor.save(function(err) {
+    if (err) {
+      console.log("O senshor não foi salvo");
+    } else {
+      console.log("Sensor cadastrado!");
+      res.render("mensagemSucesso")
+    }
+  });
+
+
+});
+
 
 //https://mongoosejs.com/docs/queries.html explicação das queries usando where
 
