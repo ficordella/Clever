@@ -199,6 +199,31 @@ app.get("/mensagemSucesso", function(req, res) {
   res.render("mensagemSucesso");
 });
 
+app.get("/relatorios", function(req, res) {
+  Maquina.find({}, function(err, foundMaquina) {
+    if (foundMaquina) {
+      console.log(foundMaquina)
+      res.render("relatorios", {
+        listaDeMaquinas: foundMaquina,
+      });
+      console.log(foundMaquina);
+    } else {
+      console.log("No maquina found")
+    }
+  });
+});
+
+app.get("/graficoPreventivaCorretiva", function(req, res) {
+  res.render("graficoPreventivaCorretiva");
+});
+
+app.get("/graficoAbertaFechadas", function(req, res) {
+  res.render("graficoAbertaFechadas");
+});
+
+app.get("/resultadosRelatorios", function(req, res) {
+  res.render("resultadosRelatorios");
+});
 
 //função para o banco de dados do registro de usuário
 // construtor para salvar o usuário no banco de dados
