@@ -225,6 +225,181 @@ app.get("/resultadosRelatorios", function(req, res) {
   res.render("resultadosRelatorios");
 });
 
+////////////////////////////////////funções para pesquisa de relatórios/////////////////////////
+
+
+app.post("/relatorios", function(req, res) {
+    const idMaquina = req.body.idMaquina;
+    const dataInicial = req.body.dataInicial;
+    const dataFinal = req.body.dataFinal;
+    const status = req.body.status;
+    const tipoOrdem = req.body.tipoOrdem;
+    const preventivaXcorretiva = req.body.preventivaXcorretiva;
+    const abertasXfechadas = req.body.abertasXfechadas;
+
+
+
+    //inicia procura pelos parâmetros passados
+
+    //////////////////////////////inicia a busca vendo se o campo login não está vazio///////////////////////////////////////////////
+
+      console.log(idMaquina);
+      console.log(status);
+      console.log(tipoOrdem);
+
+      if (preventivaXcorretiva != undefined ){
+        //// escrever função aqui
+        console.log(preventivaXcorretiva)
+      } else if (abertasXfechadas ){
+        /// escrever função aqui
+        console.log(abertasXfechadas)
+      } else {
+
+        if(idMaquina =="" && status ==undefined && tipoOrdem == undefined ){
+          console.log("Pesquisa apenas com as datas")
+          Ordem.find({
+          dataInicial: { $gte: dataInicial, $lte: dataFinal },
+        }, function(err, foundOrdens) {
+          if (!err) {
+            console.log(foundOrdens);
+            res.send(foundOrdens)
+            /*res.render("resultadoOrdens", {
+              listaDeOrdens: foundOrdens
+            });*/
+          }
+        });
+        }
+
+      if(idMaquina != "" && status !=undefined && tipoOrdem != undefined ){
+        console.log("Pesquisa com todos itens")
+        Ordem.find({
+        maquinaOrdem: idMaquina,
+        status: status,
+        tipoOrdem: tipoOrdem,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+          res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      // pesquisa apenas com máquina e status informado
+
+      if(idMaquina != "" && status !=undefined ){
+        console.log("Pesquisa apenas com máquina e status")
+        Ordem.find({
+        maquinaOrdem: idMaquina,
+        status: status,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+            res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      if(idMaquina != "" && tipoOrdem !=undefined ){
+        console.log("Pesquisa apenas com máquina e tipo de ordem")
+        Ordem.find({
+        maquinaOrdem: idMaquina,
+        tipoOrdem: tipoOrdem,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+          res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      if( status !=undefined && tipoOrdem != undefined ){
+        console.log("Pesquisa com tipo de ordem e status")
+        Ordem.find({
+        status: status,
+        tipoOrdem: tipoOrdem,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+            res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      if(idMaquina != "" && status ==undefined && tipoOrdem == undefined ){
+        console.log("Pesquisa apenas por máquina")
+        Ordem.find({
+        maquinaOrdem: idMaquina,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+            res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      if(idMaquina == "" && status !=undefined && tipoOrdem == undefined ){
+        console.log("Pesquisa apenas por status")
+        Ordem.find({
+        status: status,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+            res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+      if(idMaquina == "" && status ==undefined && tipoOrdem != undefined ){
+        console.log("Pesquisa apenas por tipo de ordem")
+        Ordem.find({
+        tipoOrdem: tipoOrdem,
+        dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+            res.send(foundOrdens)
+          /*res.render("resultadoOrdens", {
+            listaDeOrdens: foundOrdens
+          });*/
+        }
+      });
+      }
+
+
+}
+
+
+  });
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
 //função para o banco de dados do registro de usuário
 // construtor para salvar o usuário no banco de dados
 const userSchema = {
