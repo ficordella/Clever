@@ -101,7 +101,7 @@
         <div class="conteudoEsquerdoUsuario">
 
           <label for="idMaquina" class="form-label">ID Máquina</label>
-          <select class="form-select" name="idMaquina" required>
+          <select class="form-select" name="idMaquina" >
             <option value="" selected>Selecione a máquina que deseja exibir o relatório</option>
             <% listaDeMaquinas.forEach(function(maquina) { %>
             <option value="<%= maquina.idMaquina %>"><%= maquina.idMaquina %></option>
@@ -164,28 +164,28 @@
             <label class="form-label">Tipo de ordem: </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Preventiva" name="tipoOrdem" id="Preventiva">
+            <input class="form-check-input" type="radio" value="preventiva" name="tipoOrdem" id="Preventiva">
             <label class="form-check-label" for="Aberta">
               Preventiva
             </label>
           </div>
           <br>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Corretiva" name="tipoOrdem" id="Corretiva">
+            <input class="form-check-input" type="radio" value="corretiva" name="tipoOrdem" id="Corretiva">
             <label class="form-check-label" for="Corretiva">
               Corretiva
             </label>
           </div>
           <br>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Emergencial" name="tipoOrdem" id="Emergencial">
+            <input class="form-check-input" type="radio" value="emergencial" name="tipoOrdem" id="Emergencial">
             <label class="form-check-label" for="Emergencial">
               Emergencial
             </label>
           </div>
           <br>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Verificação" name="tipoOrdem" id="Verificação">
+            <input class="form-check-input" type="radio" value="verificação" name="tipoOrdem" id="Verificação">
             <label class="form-check-label" for="Verificação">
               Verificação
             </label>
@@ -200,7 +200,7 @@
 
           <label for="dataInicial" class="form-label">Gráficos</label>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Preventiva" name="preventivaXcorretiva" id="preventivaXcorretiva">
+            <input class="form-check-input" type="radio" value="preventivaXcorretiva" name="preventivaXcorretiva" id="preventivaXcorretiva">
             <label class="form-check-label" for="preventivaXcorretiva">
               Preventiva x Corretivas
             </label>
