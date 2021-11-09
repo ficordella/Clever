@@ -97,7 +97,24 @@
 
     <div class="conteudo">
       <div class="conteudoEsquerdo">
-      
+
+        <%  var abertas = 0; %>
+        <%  var totais = 0; %>
+        <%  var fechadas = 0; %>
+        <%  var preventiva = 0; %>
+        <%  var emergencial = 0; %>
+        <%  var corretiva = 0; %>
+        <%  var verificacao = 0; %>
+        <% listaDeOrdens.forEach(function(ordem) { %>
+          <% totais ++;  %>
+        <%  if(ordem.status === "Fechada"){fechadas ++;} else{abertas ++; } %>
+        <%  if(ordem.tipoOrdem === "preventiva"){preventiva ++;}  %>
+        <%  if(ordem.tipoOrdem === "corretiva"){corretiva ++;}  %>
+        <%  if(ordem.tipoOrdem === "emergencial"){emergencial ++;}  %>
+        <%  if(ordem.tipoOrdem === "verificacao"){verificacao ++;}  %>
+        <%  }); %>
+
+
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
         <!--Os 2 gráficos abaixos foram importados de https://www.w3schools.com/ai/ai_plotly.asp></!-->
@@ -105,14 +122,14 @@
         <script>
 
           var xArray = ["OS Abertas", "OS Fechadas"];
-          var yArray = [33, 49];
+          var yArray = [<%= abertas  %>, <%= fechadas %>];
           var data = [{
             x: xArray,
             y: yArray,
             type: "bar"
           }];
           var layout = {
-            title: "OS Fechadas x OS abertas na semana"
+            title: "OS Abertas e em andamento x OS fechadas"
           };
           Plotly.newPlot("graficoBarras", data, layout);
         </script>
@@ -120,10 +137,10 @@
       <div class="conteudoDireito">
         <div id="graficoPizza" style="width:100%;max-width:700px"></div>
         <script>
-          var xArray = ["Ordens Preventivas", "Ordens Corretivas", "Ordens Emergenciais"];
-          var yArray = [55, 49, 44];
+          var xArray = ["Ordens Preventivas", "Ordens Corretivas", "Ordens Emergenciais", "Ordens de verificação"];
+          var yArray = [<%= preventiva %>, <%= corretiva %>, <%= emergencial %>, <%= verificacao %>];
           var layout = {
-            title: "Proporção de ordens abertas no ultimo mês"
+            title: "Proporção de ordens por tipo"
           };
           var data = [{
             labels: xArray,
