@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pesquisar Máquinas</title>
+  <title>Grafico OS Abertas x Fechadas</title>
   <!-- fontes do google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   <div class=containerTela>
     <!--barra de menu superior></!-->
     <div class="topnav">
-      <span class="bemVindo">Pesquisar máquinas</span>
+      <span class="bemVindo">Grafico de ordens abertas x ordens fechadas</span>
       <a href="/paginaPrincipal"> <i class="fas fa-house-user"> </i> Página Inicial</a>
       <div class="topnav-right">
         <a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a>
@@ -98,7 +98,52 @@
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
       <form id="relatoriosForm" action="/relatorios" method="post">
-        <div class="conteudoEsquerdoUsuario">
+        <div class="conteudoEsquerdoUsuario" >
+          <div id="relatorio">
+
+
+          <%  var abertas = 0; %>
+          <%  var totais = 0; %>
+          <%  var fechadas = 0; %>
+          <% listaDeOrdens.forEach(function(ordem) { %>
+            <% totais ++;  %>
+          <%  if(ordem.status === "Aberta"){abertas ++;} else{fechadas ++; } %>
+          <%  }); %>
+
+        <p>Total de ordens geradas no período: <%= totais  %> </p>
+        <p>Total de ordens que estão abertas no período selecionado: <%= abertas  %> </p>
+        <p>Total de ordens foram fechadas no período selecionado: <%= fechadas  %> </p>
+        <p>Eficácia da equipe: <%= Math.trunc(fechadas / totais *100)  %>% </p>
+
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+        <!--Os 2 gráficos abaixos foram importados de https://www.w3schools.com/ai/ai_plotly.asp></!-->
+        <div id="graficoBarras" style="width:100%;"></div>
+        <script>
+
+          var xArray = ["Abertas", "Fechadas"];
+          var yArray = [<%= abertas  %>, <%= fechadas  %>];
+          var data = [{
+            x: xArray,
+            y: yArray,
+            type: "bar"
+          }];
+          var layout = {
+            title: "Ordens abertas x ordens fechadas do período selecionado"
+          };
+          Plotly.newPlot("graficoBarras", data, layout);
+        </script>
+
+          </div>
+
+          <div >
+            <br>
+
+            <button type="button" onclick="printDiv()" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+            <button type="button" onclick="sendEmail()" class="btn btn-primary"><i class="fas fa-envelope"></i> Email</button>
+            <a href="relatorios" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+          </div>
 
 
         </div>
@@ -113,6 +158,50 @@
 
   </div>
 
+  <script type="text/javascript">
+
+
+  function printDiv() {
+
+    let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+    mywindow.document.write(`<html><head><title>Relatorio ordens abertas x ordens fechadas</title>`);
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementById('relatorio').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close();
+    mywindow.focus();
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+
+  }
+
+
+  </script>
+
+
+  <script type="text/javascript">
+
+  function sendEmail() {
+    var email = prompt("Digite seu email:");
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "maintenanceclever@gmail.com",
+      Password: "Clever12#",
+      To: email,
+      From: "maintenanceclever@gmail.com",
+      Subject: "Relatório ordens abertas x ordens fechadas",
+      Body: document.getElementById('relatorio').innerHTML,
+    }).then(
+      message => alert("E-mail com dados enviados!")
+    );
+  }
+
+  </script>
 
 
 </body>
