@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pesquisar Máquinas</title>
+  <title>Relatórios</title>
   <!-- fontes do google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   <div class=containerTela>
     <!--barra de menu superior></!-->
     <div class="topnav">
-      <span class="bemVindo">Pesquisar máquinas</span>
+      <span class="bemVindo">Relatórios</span>
       <a href="/paginaPrincipal"> <i class="fas fa-house-user"> </i> Página Inicial</a>
       <div class="topnav-right">
         <a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a>
@@ -97,22 +97,129 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-      <form id="relatoriosForm" action="/relatorios" method="post">
+
         <div class="conteudoEsquerdoUsuario">
+          <div id="relatorio">
+
+
+
+          <%  var totais = 0; %>
+          <p>Relação de ordens encontradas com os dados informados:</p>
+
+          <br>
+          <table lass="table table-borderless">
+          <% listaDeOrdens.forEach(function(ordem) { %>
+            <% totais ++;  %>
+
+            <tr>
+              <td><b>Número da ordem de serviço: </b><%= ordem.numeroOrdem %> </td>
+            </tr>
+
+            <tr>
+              <td><b>Máquina: </b><%= ordem.maquinaOrdem %></td>
+            </tr>
+
+            <tr>
+              <td><b>Título: </b><%= ordem.maquinaOrdem %></td>
+            </tr>
+
+            <tr>
+              <td><b>Descrição detalhada: </b><%= ordem.descricaoOrdem  %> </td>
+            </tr>
+            <tr>
+              <td><b>Descrição do serviço realizado: </b><%= ordem.descricaoServicoRealizado %></td>
+            </tr>
+            <tr>
+              <td><b>Técnico responsável: </b> <%= ordem.responsavel %> </td>
+            </tr>
+            <tr>
+              <td><b>Status: </b><%= ordem.status %></td>
+            </tr>
+            <tr>
+              <td><b>Tipo de ordem: </b><%= ordem.tipoOrdem %></td>
+            </tr>
+            <tr>
+              <td><b>Data de abertura: </b><%= ordem.dataInicial.toDateString() %></td>
+            </tr>
+
+            <tr>
+              <td><b>Data de fechamento: </b><%= ordem.dataFinal %><p><br></p></td>
+            </tr>
+
+            <%  }); %>
+  </table>
+
+
+
+
+          </div>
+
+
 
 
         </div>
-
 
         <div class="conteudoDireitoUsuario">
+          <div >
+            <p>Total de ordens geradas no período: <%= totais  %> </p>
+            <br>
 
-        
+            <button type="button" onclick="printDiv()" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+            <button type="button" onclick="sendEmail()" class="btn btn-primary"><i class="fas fa-envelope"></i> Email</button>
+            <a href="relatorios" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+          </div>
+
         </div>
-      </form>
+
+
     </div>
 
   </div>
 
+  <script type="text/javascript">
+
+
+  function printDiv() {
+
+    let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+    mywindow.document.write(`<html><head><title>Relatorio de ordens pesquisadas</title>`);
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementById('relatorio').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close();
+    mywindow.focus();
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+
+  }
+
+
+  </script>
+
+
+  <script type="text/javascript">
+
+  function sendEmail() {
+    var email = prompt("Digite seu email:");
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "maintenanceclever@gmail.com",
+      Password: "Clever12#",
+      To: email,
+      From: "maintenanceclever@gmail.com",
+      Subject: "Relatório de ordens pesquisadas",
+      Body: document.getElementById('relatorio').innerHTML,
+    }).then(
+      message => alert("E-mail com dados enviados!")
+    );
+  }
+
+  </script>
 
 
 </body>
