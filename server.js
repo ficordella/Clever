@@ -1,5 +1,8 @@
 //Endereço no heroku:  https://agile-escarpment-85835.herokuapp.com/
 
+/////////////////////////////////nota: verificar campos de radio button que estão com "" e trocar para undefined nos ifs, revisar função de envio de email
+// na criação do usuario no usuariosFuncoes e functions.js
+
 const express = require("express"); //definir a função para requerir os modulos do node-express
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -41,13 +44,11 @@ app.get("/password", function(req, res) {
 });
 
 app.get("/paginaPrincipal", function(req, res) {
-
-  Ordem.find().exec(function(err, results) {
-    count = results.length
-    console.log(count);
-    return count;
+  Ordem.find({}, function(err, foundOrdens) {
+    res.render("paginaPrincipal", {
+    listaDeOrdens: foundOrdens
+    });
   });
-  res.render("paginaPrincipal");
 });
 
 app.get("/cadastrarUsuarioInternal", function(req, res) {
@@ -124,6 +125,30 @@ app.get("/consultarPreventivas", function(req, res) {
     });
   });
 
+/*  User.find({ // tentativa de retornar máquina e usuario
+    tipoUsuario: "Tecnico",
+  }, function(err, foundUser) {
+    console.log(foundUser);
+    return foundUser;
+    /*res.render("resultadoPreventivas", {
+      listaDeUsuarios: foundUser
+    });
+  });
+
+  Maquina.find({}, function(err, foundMaquina) {
+    console.log(foundMaquina);
+    return foundMaquina;
+    /*res.render("processoMaquinas", {
+      listaDeMaquinas: foundMaquina
+    });
+  });
+
+  res.render("resultadoPreventivas", {
+    listaDeUsuarios: foundUser,
+    listaDeMaquinas: foundMaquina
+});*/
+
+
 });
 
 app.get("/resultadoPreventivas", function(req, res) {
@@ -136,6 +161,8 @@ app.get("/resultadoPreventivas", function(req, res) {
       listaDeUsuarios: foundUser
     });
   });
+
+
 });
 
 app.get("/cadastrarMaquinas", function(req, res) {
@@ -198,6 +225,7 @@ app.get("/resultadoMaquinas", function(req, res) {
 app.get("/mensagemSucesso", function(req, res) {
   res.render("mensagemSucesso");
 });
+////////////////////////////////////// alterações para as páginas de relatórios/////////////////////////////////
 
 app.get("/relatorios", function(req, res) {
   Maquina.find({}, function(err, foundMaquina) {
@@ -213,8 +241,8 @@ app.get("/relatorios", function(req, res) {
   });
 });
 
-app.get("/graficoPreventivaCorretiva", function(req, res) {
-  res.render("graficoPreventivaCorretiva");
+app.get("/graficoPreventivaCorretivas", function(req, res) {
+  res.render("graficoPreventivaCorretivas");
 });
 
 app.get("/graficoAbertaFechadas", function(req, res) {
@@ -224,6 +252,11 @@ app.get("/graficoAbertaFechadas", function(req, res) {
 app.get("/resultadosRelatorios", function(req, res) {
   res.render("resultadosRelatorios");
 });
+
+app.get("/contato", function(req, res) {
+  res.render("contato");
+});
+
 
 ////////////////////////////////////funções para pesquisa de relatórios/////////////////////////
 
@@ -241,18 +274,78 @@ app.post("/relatorios", function(req, res) {
 
     //inicia procura pelos parâmetros passados
 
-    //////////////////////////////inicia a busca vendo se o campo login não está vazio///////////////////////////////////////////////
-
-      console.log(idMaquina);
-      console.log(status);
-      console.log(tipoOrdem);
+    //////////////////////////////inicia a busca ///////////////////////////////////////////////
 
       if (preventivaXcorretiva != undefined ){
-        //// escrever função aqui
-        console.log(preventivaXcorretiva)
-      } else if (abertasXfechadas ){
-        /// escrever função aqui
-        console.log(abertasXfechadas)
+        console.log("Pesquisa preventivas x corretivas")
+
+        if(idMaquina != ""){
+          console.log("Pesquisa preventivas x corretivas relacionado à maquina escolhida");
+          Ordem.find({
+            maquinaOrdem: idMaquina,
+            tipoOrdem: { $in: ["preventiva", "corretiva", "emergencial" ]},
+            dataInicial: { $gte: dataInicial, $lte: dataFinal },
+        }, function(err, foundOrdens) {
+          if (!err) {
+            console.log(foundOrdens);
+            //res.send(foundOrdens)
+            res.render("graficoPreventivaCorretivas", {
+              listaDeOrdens: foundOrdens
+            });
+          }
+        });
+      } else{
+        Ordem.find({
+          tipoOrdem: { $in: ["preventiva", "corretiva", "emergencial" ]},
+          dataInicial: { $gte: dataInicial, $lte: dataFinal },
+      }, function(err, foundOrdens) {
+        if (!err) {
+          console.log(foundOrdens);
+          //res.send(foundOrdens)
+          res.render("graficoPreventivaCorretivas", {
+            listaDeOrdens: foundOrdens
+          });
+        }
+      });
+      }
+
+
+      } else if (abertasXfechadas != undefined){
+        console.log("Pesquisa abertas x fechadas");
+        if(idMaquina != ""){
+            console.log("Pesquisa abertas x fechadas relacionado à maquina escolhida");
+          Ordem.find({
+            maquinaOrdem: idMaquina,
+            status: { $in: ["Aberta", "Fechada" ]},
+            dataInicial: { $gte: dataInicial, $lte: dataFinal },
+        }, function(err, foundOrdens) {
+          if (!err) {
+            console.log(foundOrdens);
+            //res.send(foundOrdens)
+            res.render("graficoAbertaFechadas", {
+              listaDeOrdens: foundOrdens
+            });
+          }
+        });
+
+        } else {
+          Ordem.find({
+            status: { $in: ["Aberta", "Fechada" ]},
+            dataInicial: { $gte: dataInicial, $lte: dataFinal },
+        }, function(err, foundOrdens) {
+          if (!err) {
+            console.log(foundOrdens);
+            //res.send(foundOrdens)
+            res.render("graficoAbertaFechadas", {
+              listaDeOrdens: foundOrdens
+            });
+          }
+        });
+        }
+
+
+
+
       } else {
 
         if(idMaquina =="" && status ==undefined && tipoOrdem == undefined ){
@@ -262,10 +355,10 @@ app.post("/relatorios", function(req, res) {
         }, function(err, foundOrdens) {
           if (!err) {
             console.log(foundOrdens);
-            res.send(foundOrdens)
-            /*res.render("resultadoOrdens", {
+            //res.send(foundOrdens)
+            res.render("resultadosRelatorios", {
               listaDeOrdens: foundOrdens
-            });*/
+            });
           }
         });
         }
@@ -280,10 +373,10 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-          res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -299,10 +392,10 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-            res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -316,10 +409,9 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-          res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -333,10 +425,9 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-            res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -349,10 +440,9 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-            res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -365,10 +455,9 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-            res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -381,10 +470,9 @@ app.post("/relatorios", function(req, res) {
       }, function(err, foundOrdens) {
         if (!err) {
           console.log(foundOrdens);
-            res.send(foundOrdens)
-          /*res.render("resultadoOrdens", {
+          res.render("resultadosRelatorios", {
             listaDeOrdens: foundOrdens
-          });*/
+          });
         }
       });
       }
@@ -398,7 +486,6 @@ app.post("/relatorios", function(req, res) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
 
 //função para o banco de dados do registro de usuário
 // construtor para salvar o usuário no banco de dados
