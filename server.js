@@ -257,6 +257,10 @@ app.get("/contato", function(req, res) {
   res.render("contato");
 });
 
+app.get("/start", function(req, res) {
+  res.render("start");
+});
+
 
 ////////////////////////////////////funções para pesquisa de relatórios/////////////////////////
 
@@ -509,14 +513,28 @@ app.post("/novoUsuario", function(req, res) {
     dataNascimento: req.body.dataNascimento
   });
 
+// alterações para verificar primeiro se o login já está sendo utilizado
+
+User.findOne({
+  login: req.body.loginNewUser
+}, function(err, foundUser) {
+
+  if (foundUser){
+    console.log("Login já existente!");
+    res.send("Esse login de usuário já existe, favor escolher outro!");
+  } else {
+    console.log("Salvar usuario")
   newUser.save(function(err) {
     if (err) {
       console.log(err);
     } else {
       console.log("Usuário salvo!");
-      res.render("paginaPrincipal");
+      res.render("index");
     }
   });
+}
+});
+
 });
 
 
@@ -536,7 +554,7 @@ app.post("/", function(req, res) {
     } else {
       if (foundUser) {
         if (foundUser.password === password) {
-          res.render("paginaPrincipal");
+          res.render("start");
         } else {
           res.send('Erro! senhha não encontrada');
         }
