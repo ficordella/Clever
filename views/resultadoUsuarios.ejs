@@ -100,41 +100,33 @@
         <form action="/resultadoUsuarios" method="post">
 
           <p class="usuariosCabecalho">Editar usuário:</p>
-          <div class="input-group rounded">
-            <input type="text" name="loginProcurado" class="form-control rounded" placeholder="Insira o login do usuário para poder atualizar os dados" aria-label="Nome de usuário" aria-describedby="search-addon" id="procurarNomeUsuario" required />
-            <span class="input-group-text border-0">
-              <i class="fas fa-search"></i>
-            </span>
-          </div>
+          <select class="form-select" name="loginProcurado">
+            <option value = "" selected>Selecione usuário que deseja editar</option>
+            <% listaDeUsuarios.forEach(function(user) { %>
+            <option><%= user.login %></option>
+            <%  }); %>
+          </select>
           <br>
           <div class="input-group rounded">
             <input type="text" name="nomeUsuarioProcurado" class="form-control rounded" placeholder="Nome completo do usuário" aria-label="Nome completo do usuário" aria-describedby="search-addon" id="procurarNomeCompleto" />
-            <span class="input-group-text border-0">
-              <i class="fas fa-search"></i>
-            </span>
+
           </div>
           <br>
           <div class="input-group rounded">
             <input type="search" name="emailprocurado" class="form-control rounded" placeholder="E-mail" aria-label="E-mail" aria-describedby="search-addon" id="procurarEmail" />
-            <span class="input-group-text border-0">
-              <i class="fas fa-search"></i>
-            </span>
+
           </div>
           <br>
 
           <div class="input-group rounded">
             <input type="password" name="novaSenhaUser" class="form-control rounded" placeholder="Nova senha" aria-label="E-mail" aria-describedby="search-addon" id="novaSenhaUser" />
-            <span class="input-group-text border-0">
-              <i class="fas fa-search"></i>
-            </span>
+
           </div>
           <br>
 
           <div class="input-group rounded">
             <input type="password" name="confimacaoNovaSenhaUser" class="form-control rounded" placeholder="Confirmação de senha" aria-label="E-mail" aria-describedby="search-addon" id="confimacaoNovaSenhaUser" />
-            <span class="input-group-text border-0">
-              <i class="fas fa-search"></i>
-            </span>
+
           </div>
           <br>
 
