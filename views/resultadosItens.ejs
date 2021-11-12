@@ -94,11 +94,20 @@
     <div class="conteudo">
       <div class="conteudoEsquerdoInventario">
         <form name="itemProcura" action="/resultadosItens" method="post">
+
           <div class="mb-3">
-            <label for="idItem" class="form-label" id="number">ID Item</label>
-            <input type="text" class="form-control" name="idItem" id="idItem" maxlength="50" required>
-            <div id="IdItemHelp" class="form-text">Insira o ID do item para poder fazer a atualização</div>
-          </div>
+            <div class="form-group">
+              <label for="descricaoItem" class="form-label">ID do item</label>
+          <select class="form-select" name="idItem" required>
+            <option value = "" selected >Selecione o item que deseja editar</option>
+              <% listaDeItens.forEach(function(item) { %>
+            <option><%= item.idItem %></option>
+            <%  }); %>
+          </select>
+        <div id="descricaoitemHelp" class="form-text">Selecione o ID item que deseja alterar.</div>
+      </div>
+
+    </div>
 
           <div class="mb-3">
             <div class="form-group">
@@ -143,48 +152,35 @@
           <div id="modeloItemHelp" class="form-text">Insira o modelo do item que deseja alterar.</div>
 
         </div>
-        </form>
 
-        <br>
-
-        <form action="/resultadosItens" method="post">
-          <div class="mb-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="todosItens" id="todosItens" value="true">
-              <label class="form-check-label" for="todosItens">
-                Deletar todos?
-              </label>
-              <div id="todosItensHelp" class="form-text">Se marcado esse campo, a seleção vai deletar todos itens pesquisados</div>
-            </div>
-          </div>
-
+        <div class="mb-3">
+          <label for="quantidadeItem" class="form-label">Quantidade atual do item:</label>
+          <input type="number" class="form-control" id="quantidadeAtualItem" name="quantidadeAtualItem" >
+          <div id="quantidadeItemHelp" class="form-text">Insira a quantidade atual do item.</div>
+        </div>
+          </form>
+          <form action="/deleteItens" method="post">
           <div class="form-group">
             <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
 
-            <select multiple class="form-control" id="resultadoItens" ondblclick= alert(Object.values(this))>
-              <% var i = 0; %>
+            <select multiple class="form-control" name="listaResultadoItens" onchange="editar(this)" >
+
               <% listaDeItens.forEach(function(item) { %>
 
-              <option value="<%i%>"><%= "ID: "+  item.idItem + ", " + item.descricaoItem +", "+item.maquinaItem+", "+ item.vendedorItem + ", "+item.marcaItem +", "+item.modeloItem; %></option>
-            <%i++;%>
+              <option value="<%= item.idItem %>"><%= "ID: "+  item.idItem + ", " + item.descricaoItem +", "+item.maquinaItem+", "+ item.vendedorItem + ", "+item.marcaItem +", "+item.modeloItem+", qnt atual: "+item.quantidadeAtualItem; %></option>
+
             <%  }); %>
 
 
-
-
-
           </select>
-
-
-
 
 
                 <div id="pesqueisaItensHelp" class="form-text">Selecione o item que deseja excluir</div>
           </div>
           <div class="containerBtnInventarioEdit">
             <br>
-            <button type="button" class="btn btn-primary" onclick="limparTodosCampos()"><i class="fas fa-eraser"></i> Limpar</button>
-            <button type="button" class="btn btn-primary" onclick="removeOption()"><i class="fas fa-trash-alt"></i> Excluir</button>
+
+            <button type="submit" class="btn btn-primary" ><i class="fas fa-trash-alt"></i> Excluir</button>
 
           </div>
       </div>
