@@ -529,7 +529,7 @@ User.findOne({
       console.log(err);
     } else {
       console.log("Usuário salvo!");
-      res.render("index");
+      res.render("start");
     }
   });
 }
@@ -646,6 +646,15 @@ app.post("/cadastrarUsuarioInternal", function(req, res) {
     tipoUsuario: req.body.flexRadioDefault
   });
 
+  User.findOne({
+    login: req.body.nomeUsuario
+  }, function(err, foundUser) {
+
+    if (foundUser){
+      console.log("Login já existente!");
+      res.send("Esse login de usuário já existe, favor escolher outro!");
+    } else {
+      console.log("Salvar usuario")
 
   novoUsuario.save(function(err) {
     if (err) {
@@ -655,6 +664,10 @@ app.post("/cadastrarUsuarioInternal", function(req, res) {
       res.render("cadastrarUsuarioInternal");
     }
   });
+
+}
+
+});
 });
 
 
@@ -895,6 +908,16 @@ app.post("/inventario", function(req, res) {
 
   //  console.log(newItem.descricaoItem)
 
+  Item.findOne({
+    idItem: req.body.idItem
+  }, function(err, foundItem) {
+
+    if (foundItem){
+      console.log("Item já existente!");
+      res.send("Esse ID de item já existe, favor escolher outro!");
+    } else {
+      console.log("Salvar item");
+
   newItem.save(function(err) {
     if (err) {
       console.log("O item não foi salvo!");
@@ -903,6 +926,8 @@ app.post("/inventario", function(req, res) {
       res.render("inventario");
     }
   });
+}
+});
 });
 
 
@@ -1155,6 +1180,43 @@ app.post("/resultadosItens", function(req, res) {
     );
   }
 
+  // atualiza a quantidade atual do item
+
+  const quantidadeAtualItem = req.body.quantidadeAtualItem;
+  if (quantidadeAtualItem != "") {
+    Item.updateOne({
+        idItem: req.body.idItem
+      }, {
+        quantidadeAtualItem: req.body.quantidadeAtualItem
+      },
+      function(err) {
+        if (!err) {
+          res.render("consultarEditarItensInventario");
+        } else {
+          res.send("erro");
+        }
+      }
+    );
+  }
+
+});
+
+////////////////////////////////////////////// função para deletar item ///////////////////////////////////
+
+app.post("/deleteItens", function(req, res) {
+  const listaResultadoItens = req.body.listaResultadoItens;
+  console.log(listaResultadoItens);
+  Item.findOneAndDelete({
+    idItem: listaResultadoItens
+  }, function(err) {
+    if (!err) {
+      console.log("Sucesso!");
+      //redireciona para atualizar a página
+      res.render("consultarEditarItensInventario");
+    } else {
+      res.send("Erro!");
+    }
+  })
 });
 
 //------------------------------------- funções de criação de ordens ----------------------------------//
