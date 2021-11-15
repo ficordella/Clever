@@ -125,30 +125,6 @@ app.get("/consultarPreventivas", function(req, res) {
     });
   });
 
-/*  User.find({ // tentativa de retornar máquina e usuario
-    tipoUsuario: "Tecnico",
-  }, function(err, foundUser) {
-    console.log(foundUser);
-    return foundUser;
-    /*res.render("resultadoPreventivas", {
-      listaDeUsuarios: foundUser
-    });
-  });
-
-  Maquina.find({}, function(err, foundMaquina) {
-    console.log(foundMaquina);
-    return foundMaquina;
-    /*res.render("processoMaquinas", {
-      listaDeMaquinas: foundMaquina
-    });
-  });
-
-  res.render("resultadoPreventivas", {
-    listaDeUsuarios: foundUser,
-    listaDeMaquinas: foundMaquina
-});*/
-
-
 });
 
 app.get("/resultadoPreventivas", function(req, res) {
@@ -838,7 +814,7 @@ app.post("/resultadoUsuarios", function(req, res) {
   /////////////////////////////////////// atualiza tipo de usuario ///////////////////////////
   const tipoDeUsuario = req.body.flexRadioDefault;
 
-  if (tipoDeUsuario != "") {
+  if (tipoDeUsuario != undefined) {
     User.updateOne({
         login: req.body.loginProcurado
       }, {
@@ -1232,7 +1208,7 @@ const ordemServicoSchema = {
   dataInicial: Date,
   dataFinal: String, //possivelmente terá que voltar para formato data
   setor: String,
-  maquinaParada: Boolean,
+  maquinaParada: String,
   tipoOrdem: String,
   status: String,
   responsavel: String
@@ -1260,7 +1236,7 @@ app.post("/criarOrdens", function(req, res) {
     horaFinal: req.body.horaFinal,
     dataInicial: req.body.dataOrdem,
     setor: req.body.setorOrdem,
-    //maquinaParada: req.body.maquinaParada,
+    maquinaParada: req.body.maquinaParada,
     tipoOrdem: req.body.flexRadioDefault,
     status: "Aberta"
 
@@ -1429,7 +1405,7 @@ app.post("/pesquisarOrdensServico", function(req, res) {
 
                 ////////////////////////////////////  procura pelo tipo de ordem ///////////////////////////////////////
 
-                if (flexRadioDefault != "") {
+                if (flexRadioDefault != undefined) {
                   console.log(flexRadioDefault);
                   Ordem.find({
                     tipoOrdem: flexRadioDefault,
@@ -1753,7 +1729,7 @@ app.post("/resultadoPreventivas", function(req, res) {
   }
 
   const flexRadioDefault = req.body.flexRadioDefault;
-  if (flexRadioDefault != "") {
+  if (flexRadioDefault != undefined) {
     Preventiva.updateOne({
         codigoPreventiva: req.body.tituloOrdemPreventiva
       }, {
