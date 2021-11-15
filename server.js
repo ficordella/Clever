@@ -1604,7 +1604,17 @@ app.post("/ordemPreventivaCriar", function(req, res) {
 
   });
   var teste = req.body.listaPreventiva;
-  console.log(teste);
+  //console.log(codigoPreventiva);
+
+  Preventiva.findOne({
+    codigoPreventiva: req.body.tituloOrdemPreventiva
+  }, function(err, foundItem) {
+
+    if (foundItem){
+      console.log("Código de preventiva já existente!");
+      res.send("Esse código de preventiva já está sendo utilizado, favor escolher outro!");
+    } else {
+      console.log("Salvar preventiva");
 
   newOrdemPreventiva.save(function(err) {
     if (err) {
@@ -1615,7 +1625,8 @@ app.post("/ordemPreventivaCriar", function(req, res) {
       res.send("Sua ordem preventiva foi criada com sucesso, o título dela é: " + i);
     }
   });
-
+}
+});
 });
 
 //---------------------------------------- pesquisar ordem preventiva ------------------------------------------------------//
@@ -1794,7 +1805,15 @@ app.post("/cadastrarMaquinas", function(req, res) {
     itensCriticos: req.body.listaItensCriticos,
   });
 
+  Maquina.findOne({
+    idMaquina: req.body.idMaquina
+  }, function(err, foundMaquina) {
 
+    if (foundMaquina){
+      console.log("Maquina já existente!");
+      res.send("Esse ID da máquina já existe, favor escolher outro!");
+    } else {
+      console.log("Salvar máquina");
 
 
   newMaquina.save(function(err) {
@@ -1805,7 +1824,8 @@ app.post("/cadastrarMaquinas", function(req, res) {
       res.send("Nova máquina salva com sucesso no cadastro");
     }
   });
-
+}
+});
 
 });
 
