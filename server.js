@@ -18,9 +18,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public")); // função para usar o CSS e JS
 
-//mongoose.connect("mongodb://localhost:27017/cleverDB");
+mongoose.connect("mongodb://localhost:27017/cleverDB");
 //estabelecer comunicação com o mongodb cloud
-mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
+//mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
 
 app.get("/", function(req, res) { //função para renderizar a pagina de login
 
@@ -200,6 +200,14 @@ app.get("/resultadoMaquinas", function(req, res) {
 
 app.get("/mensagemSucesso", function(req, res) {
   res.render("mensagemSucesso");
+});
+
+app.get("/editarOrdemServico", function(req, res) {
+  res.render("editarOrdemServico");
+});
+
+app.get("/editarItem", function(req, res) {
+  res.render("editarItem");
 });
 ////////////////////////////////////// alterações para as páginas de relatórios/////////////////////////////////
 
@@ -1194,6 +1202,55 @@ app.post("/deleteItens", function(req, res) {
     }
   })
 });
+////////////////////////////editar um unico item/////////////////////////
+
+app.post("/editarItemUnico", function(req, res) {
+  const listaResultadoItens = req.body.listaResultadoItens;
+  console.log(listaResultadoItens);
+  Item.find({
+    idItem: listaResultadoItens,
+  }, function(err, foundItem) {
+    if (foundItem) {
+      res.render("editarItem", {
+        listaDeItens: foundItem
+      });
+      console.log(foundItem);
+    } else {
+      res.send("No item found!");
+      console.log("No item found");
+    }
+  })
+});
+
+////////////////////////// atualizar item unico total ////////////////////////////////////////////
+
+app.post("/editarItemSelecionado", function(req, res) {
+
+    Item.updateOne({
+        idItem: req.body.idItem
+      }, {
+
+        idItem: req.body.idItem,
+        descricaoItem: req.body.descricaoItem,
+        maquinaItem: req.body.maquinaItem,
+        vendedorItem: req.body.vendedorItem,
+        marcaItem: req.body.marcaItem,
+        modeloItem: req.body.modeloItem,
+        quantidadeAtualItem: req.body.quantidadeAtualItem,
+        quantidadeMinimaItem: req.body.quantidadeMinimaItem,
+
+      },
+      //{$set: req.body},
+      function(err) {
+        if (!err) {
+          //res.render("consultarEditarItensInventario");
+          res.send("item editado com sucesso!")
+        } else {
+          res.send("erro");
+        }
+      }
+    );
+  });
 
 //------------------------------------- funções de criação de ordens ----------------------------------//
 
