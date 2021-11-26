@@ -160,6 +160,7 @@
         </div>
           </form>
           <form action="/deleteItens" method="post">
+            <form action="/editarItemUnico" method="post">
           <div class="form-group">
             <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
 
@@ -179,13 +180,15 @@
           </div>
           <div class="containerBtnInventarioEdit">
             <br>
-
+            <button type="submit" class="btn btn-primary" formaction="/editarItemUnico" ><i class="fas fa-trash-alt"></i> Editar</button>
+            </form>
             <button type="submit" class="btn btn-primary" ><i class="fas fa-trash-alt"></i> Excluir</button>
 
           </div>
       </div>
     </div>
   </div>
+
   </form>
 
   <script src="JS/inventarioFuncoes.js" type="text/javascript"></script>
