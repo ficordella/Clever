@@ -59,6 +59,10 @@ app.get("/consultarEditarUsuarios", function(req, res) {
   res.render("consultarEditarUsuarios");
 });
 
+app.get("/editarUsuario", function (req, res){
+  res.render("editarUsuario");
+});
+
 app.get("/cosultarEditarItensInventario", function(req, res) {
   res.render("cosultarEditarItensInventario");
 });
@@ -1243,8 +1247,8 @@ app.post("/editarItemSelecionado", function(req, res) {
       //{$set: req.body},
       function(err) {
         if (!err) {
-          //res.render("consultarEditarItensInventario");
-          res.send("item editado com sucesso!")
+          res.render("consultarEditarItensInventario");
+          //res.send("item editado com sucesso!")
         } else {
           res.send("erro");
         }
