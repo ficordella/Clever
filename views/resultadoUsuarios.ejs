@@ -178,6 +178,7 @@
           <form action="/deleteUser" method="post">
             <div class="form-group">
               <p class="usuariosCabecalho">Lista de usuários encontrados:</p>
+              <form  action="editarUserUnico" method="post">
 
               <label for="resultadoItens" class="form-label">Resultado da pesquisa:</label>
               <select multiple class="form-control" id="resultadoItens" onchange="editar(this)" name="listaUsuariosSelect">
@@ -197,7 +198,10 @@
         <div class="btn-usuarioDireito">
 
           <a href="consultarEditarUsuarios" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+          <button type="submit" class="btn btn-primary" formaction="/editarUserUnico" ><i class="fas fa-pencil-alt"></i> Editar</button>
+        </form>
           <button type="submit" class="btn btn-primary"><i class="fas fa-trash-alt"></i> Excluir</button>
+
           </form>
         </div>
       </div>
