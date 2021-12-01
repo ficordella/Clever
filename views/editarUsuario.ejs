@@ -98,39 +98,40 @@
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
         <form id="usuarioForm" action="/atualizarUsuario" method="post">
+          <% listaDeUsuarios.forEach(function(user) { %>
       <div class="conteudoEsquerdoUsuario">
 
 
           <div class="mb-3">
             <label for="nomeUsuario" class="form-label">Nome de usuário</label>
-            <input type="text" class="form-control" id="nomeUsuario" name="nomeUsuario" maxlength="50" readonly>
+            <input type="text" class="form-control" id="nomeUsuario" name="login"  maxlength="50" readonly value = "<%= user.login %>" >
             <div id="nomeUsuarioHelp" class="form-text">Login do usuário que será editado.</div>
           </div>
 
           <div class="mb-3">
               <label for="nomeCompletoUsuario" class="form-label">Nome completo</label>
-              <input type="text" class="form-control" id="nomeCompletoUsuario" name="nomeCompletoUsuario" aria-describedby="nomeHelp">
+              <input type="text" class="form-control" id="nomeCompletoUsuario" name="nomeCompletoUsuario"  aria-describedby="nomeHelp" value = "<%= user.nomeCompleto %>">
               <div id="nomeHelp" class="form-text">Nome completo do usuário pesquisado.</div>
             </div>
 
           <div class="mb-3">
             <label for="usuarioEmail1" class="form-label">Endereço de E-mail</label>
-            <input type="email" class="form-control" id="usuarioEmail1" name="usuarioEmail1" maxlength="100">
+            <input type="email" class="form-control" id="usuarioEmail1" name="email"  maxlength="100" value = "<%= user.email %>">
             <div id="emailHelp" class="form-text">E-mail do usuário pesquisado.</div>
           </div>
 
           <div class="mb-3">
             <label for="usuarioPassword1" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="usuarioPassword1" name="usuarioPassword1">
+            <input type="password" class="form-control" value = "<%= user.password %>" name="password">
               <div id="senhaHelp" class="form-text">Senha cadastrada do usuário pesquisado.</div>
           </div>
           <div class="mb-3">
           <label for="usuarioPassword2" class="form-label">Confirmação de senha</label>
-          <input type="password" class="form-control" id="usuarioPassword2">
+          <input type="password" class="form-control" value = "<%= user.password %>" name="passwordCheck">
           <div id="contrasenha" class="form-text">Confirmação de senha cadastrada do usuário pesquisado.</div>
         </div>
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
-        <button type="button" class="btn btn-primary" onclick="limparTodosCampos()"><i class="fas fa-eraser"></i> Limpar</button>
+
         <a href="consultarEditarUsuarios" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
 
       </div>
@@ -139,11 +140,11 @@
         <div class="dataNascimentoTipoUsuario">
           <div class="mb-3">
           <label class="form-label"> Data de nascimento:</label>
-          <input class="form-control" type="date" value="" id="dataNascimento" name="dataNascimento"></input>
+          <input class="form-control" type="date" value = "<%= user.dataNascimento %>" id="dataNascimento" name="dataNascimento"></input>
           <div id="dataNascimento" class="form-text">Data de nascimento cadastrada do usuário pesquisado.</div>
           <br>
           </div>
-
+          <%  }); %>
 
           <div class="mb-3">
           <label class ="form-label">Tipo de usuário: </label>
@@ -163,7 +164,7 @@
           </div>
           <br>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario" checked>
+            <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario" >
             <label class="form-check-label" for="tipoUsuario">
               Usuário
             </label>
