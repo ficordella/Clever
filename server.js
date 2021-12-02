@@ -18,9 +18,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public")); // função para usar o CSS e JS
 
-mongoose.connect("mongodb://localhost:27017/cleverDB");
+//mongoose.connect("mongodb://localhost:27017/cleverDB");
 //estabelecer comunicação com o mongodb cloud
-//mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
+mongoose.connect("mongodb+srv://admin-clever:Clever123@cluster0clever.wg8wg.mongodb.net/cleverDB");
 
 app.get("/", function(req, res) { //função para renderizar a pagina de login
 
@@ -636,19 +636,19 @@ app.post("/atualizarUsuario", function(req, res) {
   const dataNascimento = req.body.dataNascimento;
   console.log(dataNascimento);
   const flexRadioDefault = req.body.flexRadioDefault;
- console.log(flexRadioDefault);
+  console.log(flexRadioDefault);
 
   if (password.length > 5) {
     if (password === passwordCheck) {
-      if (dataNascimento != "" && flexRadioDefault != undefined){
+
       User.updateOne({
           login: req.body.login
         }, {
           nomeCompletoUsuario : req.body.nomeCompletoUsuario,
           email : req.body.email,
-        password : req.body.password,
-        dataNascimento : req.body.dataNascimento,
-        tipoUsuario : req.body.flexRadioDefault,
+          password : req.body.password,
+          dataNascimento : req.body.dataNascimento,
+          tipoUsuario : req.body.flexRadioDefault,
         },
         //{$set: req.body},
         function(err) {
@@ -659,7 +659,13 @@ app.post("/atualizarUsuario", function(req, res) {
           }
         }
       );
-}}}}
+}
+else{
+  res.send("As senhas digitadas não são iguais!");
+}}
+else {
+  res.send("A senha precisa ter no mínimo 6 caracteres!");
+}}
 );
 
 //___________________________________________________funções para salvar usuários no banco de dados pagina cadastrarUsuarioInternal_________________
