@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Cadastrar usuários</title>
+  <title>Editar usuários</title>
   <!-- fontes do google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   <div class=containerTela>
     <!--barra de menu superior></!-->
     <div class="topnav">
-      <span class="bemVindo">Cadastrar usuários</span>
+      <span class="bemVindo">Editar usuários</span>
       <a href="/paginaPrincipal"> <i class="fas fa-house-user"> </i> Página Inicial</a>
       <div class="topnav-right">
         <a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a>
@@ -140,11 +140,11 @@
         <div class="dataNascimentoTipoUsuario">
           <div class="mb-3">
           <label class="form-label"> Data de nascimento:</label>
-          <input class="form-control" type="date" value = "<%= user.dataNascimento %>" id="dataNascimento" name="dataNascimento"></input>
+          <input class="form-control" type="text" value = "<%= user.dataNascimento.toDateString() %>" id="dataNascimento" name="dataNascimento"></input>
           <div id="dataNascimento" class="form-text">Data de nascimento cadastrada do usuário pesquisado.</div>
           <br>
           </div>
-          <%  }); %>
+
 
           <div class="mb-3">
           <label class ="form-label">Tipo de usuário: </label>
@@ -164,7 +164,7 @@
           </div>
           <br>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario" >
+            <input class="form-check-input" type="radio" value="Usuario" name="flexRadioDefault" id="tipoUsuario" checked>
             <label class="form-check-label" for="tipoUsuario">
               Usuário
             </label>
@@ -172,6 +172,7 @@
         </div>
         </div>
       </div>
+        <%  }); %>
     </form>
     </div>
 
