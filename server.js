@@ -202,6 +202,10 @@ app.get("/resultadoMaquinas", function(req, res) {
   });
 });
 
+app.get("/editarMaquinas", function(req, res) {
+  res.render("editarMaquinas");
+});
+
 app.get("/mensagemSucesso", function(req, res) {
   res.render("mensagemSucesso");
 });
@@ -2196,6 +2200,53 @@ app.post("/resultadoMaquinas", function(req, res) {
 
 });
 
+///////editar apenas uma máquina por vez////////////////////////
+
+
+app.post("/editarMaquinaUnica", function(req, res){
+const idMaquina = req.body.idMaquina;
+
+Maquina.find({
+  idMaquina: idMaquina,
+}, function(err, foundMaquina) {
+  console.log(foundMaquina)
+  res.render("editarMaquinas", {
+    listaDeMaquinas: foundMaquina
+  });
+});
+
+});
+
+//////////////////////////////////////////////////// atualizar uma máquina por vez /////////////////////////////
+
+app.post("/atualizarMaquina", function(req, res) {
+
+  const idMaquina = req.body.idMaquina;
+  const nomeMaquina = req.body.nomeMaquina;
+  const turnoMaquina = req.body.turnoMaquina;
+  const setorMaquina = req.body.setorMaquina;
+  const tecnicoMaquina = req.body.tecnicoMaquina;
+  const criticidadeMaquina = req.body.criticidadeMaquina;
+
+  Maquina.updateOne({
+      idMaquina: req.body.idMaquina
+    }, {
+       nomeMaquina : req.body.nomeMaquina,
+       turnoMaquina : req.body.turnoMaquina,
+       setorMaquina : req.body.setorMaquina,
+       tecnicoMaquina : req.body.tecnicoMaquina,
+      criticidadeMaquina: req.body.criticidadeMaquina
+    },
+    function(err) {
+      if (!err) {
+          res.render("mensagemSucesso")
+      } else {
+        res.send("erro, não foi possível fazer atualização da máquina selecionada");
+      }
+    }
+  );
+
+});
 
 
 ////////////////////////////////////////cadastra sensores para monitoramento///////////////////////////////////////
