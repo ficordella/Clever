@@ -97,19 +97,21 @@
 
     <!--Conteúdo interno da página de criação do usuário></!-->
     <div class="conteudo">
-      <form id="maquinaForm" action="/resultadoMaquinas" method="post">
+
         <div class="conteudoEsquerdoUsuario">
+          <form  action="/editarMaquinaUnica" method="post">
+
 
           <div class="mb-3">
 
             <label for="idMaquina" class="form-label">ID Máquina</label>
-            <select class="form-select" name="idMaquina" required>
-              <option value="" selected>Selecione a máquina que deseja editar</option>
+            <select class="form-select" name="idMaquina" onchange="this.form.submit()"  required>
+              <option value="" selected>Selecione a máquina que deseja editar para atualizar os campos</option>
               <% listaDeMaquinas.forEach(function(maquina) { %>
               <option value="<%= maquina.idMaquina %>"><%= maquina.idMaquina %></option>
                 <%  }); %>
             </select>
-
+          </form>
           </div>
 
           <div class="mb-3">
@@ -222,7 +224,9 @@
           </table>
 
         </div>
-      </form>
+
+
+
     </div>
 
   </div>
