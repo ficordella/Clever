@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Editar Máquinas</title>
+  <!-- fontes do google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+  <!-- css e js links-->
+  <script src="https://kit.fontawesome.com/cb4069a99b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="icon" href="images\favicon.ico">
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script src="JS/usuariosFuncoes.js" type="text/javascript"></script>
+
+</head>
+
+<body class="paginaInicial">
+  <!-- Seção cabeçalho que é utilizada em todas as telas internas do site-->
+  <div class=containerTela>
+    <!--barra de menu superior></!-->
+    <div class="topnav">
+      <span class="bemVindo">Editar máquinas</span>
+      <a href="/paginaPrincipal"> <i class="fas fa-house-user"> </i> Página Inicial</a>
+      <div class="topnav-right">
+        <a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a>
+      </div>
+    </div>
+
+    <!--barra de menu lateral></!-->
+
+    <div class="barraLateral">
+      <div class="vertical-menu">
+        <br>
+        <a href="/relatorios">Relatórios</a>
+        <button class="dropdown-btn">Ordens de serviço
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/criarOrdens">Criar ordens de serviço</a>
+          <a href="/pesquisarOrdensServico">Consultar e editar ordens de serviço</a>
+        </div>
+        <button class="dropdown-btn">Ordens preventivas
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/ordemPreventivaCriar">Criar ordem preventiva</a>
+          <a href="/consultarPreventivas">Consultar e editar ordens preventivas</a>
+        </div>
+        <button class="dropdown-btn">Máquinas
+          <i class="fa fa-caret-down"></i>
+
+        </button>
+        <div class="dropdown-container">
+          <a href="/cadastrarMaquinas">Cadastrar máquinas</a>
+          <a href="/consultarMaquinas">Consultar e editar máquinas</a>
+          <a href="/excluirMaquinas">Excluir máquinas</a>
+          <a href="/processoMaquinas">Dados de processo</a>
+        </div>
+        <button class="dropdown-btn">Usuários
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/cadastrarUsuarioInternal">Cadastrar usuários</a>
+          <a href="/consultarEditarUsuarios">Consultar e editar usuários</a>
+        </div>
+        <button class="dropdown-btn">Inventário
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="/inventario">Cadastrar Itens</a>
+          <a href="/consultarEditarItensInventario">Consultar e editar Itens</a>
+        </div>
+        <a href="/contato">Contate-nos!</a>
+      </div>
+    </div>
+
+    <script>
+      /* função para ativar os botões da barra lateral, dropdownbtn*/
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+      }
+    </script>
+
+    <!--Conteúdo interno da página de criação do usuário></!-->
+    <div class="conteudo">
+      <form id="maquinaForm" action="/atualizarMaquina" method="post">
+        <div class="conteudoEsquerdoUsuario">
+
+
+              <% listaDeMaquinas.forEach(function(maquina) { %>
+
+
+
+          <div class="mb-3">
+            <label for="nomeMaquina" class="form-label">ID da máquina</label>
+            <input readonly type="text" class="form-control" id="idMaquina" name="idMaquina" aria-describedby="nomeHelp" value="<%= maquina.idMaquina %>" >
+
+          </div>
+
+
+          <div class="mb-3">
+            <label for="nomeMaquina" class="form-label">Nome completo da máquina</label>
+            <input type="text" class="form-control" id="nomeCompletoUsuario" name="nomeMaquina" aria-describedby="nomeHelp" value = "<%= maquina.nomeMaquina %>">
+
+          </div>
+
+          <div class="mb-3">
+            <div class="form-group">
+              <label for="descricaoMaquina" class="form-label">Descrição detalhada da máquina</label>
+              <textarea class="form-control" id="descricaoMaquina" name="descricaoMaquina" rows="3" maxlength="500"><%= maquina.descricaoMaquina %></textarea>
+
+            </div>
+          </div>
+
+          <div class="mb-3">
+          <label class ="form-label">Turno de trabalho: </label>
+
+          <select class="form-select" name="turnoTrabalho">
+            <option value = "<%= maquina.turnoTrabalho %>" selected>Turno <%= " "+ maquina.turnoTrabalho %></option>
+            <option value = "A" >Turno A 06:00 - 14:00</option>
+            <option value = "B">Turno B 14:00 - 22:00</option>
+            <option value = "C">Turno C 22:00 - 06:00</option>
+
+          </select>
+
+          </div>
+
+          <div class="mb-3">
+
+            <label for="setorMaquina" class="form-label">Setor</label>
+            <select class="form-select" name="setorMaquina">
+              <option value="<%= maquina.setorMaquina %>" selected><%= maquina.setorMaquina %></option>
+              <option>Usinagem</option>
+              <option>Teste</option>
+              <option>Pintura</option>
+
+            </select>
+
+
+          </div>
+
+          <div class="mb-3">
+            <label for="tecnicoMaquina" class="form-label">Nome do técnico responsável</label>
+            <input type="text" class="form-control" id="nomeCompletoUsuario" name="tecnicoMaquina" aria-describedby="nomeHelp" value = "<%= maquina.tecnicoMaquina %>">
+
+          </div>
+
+          <div class="mb-3">
+
+            <label for="criticidadeMaquina" class="form-label">Criticidade da máquina</label>
+            <select class="form-select" name="criticidadeMaquina">
+              <option value="<%= maquina.criticidadeMaquina %>" selected><%= maquina.criticidadeMaquina %></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+
+            </select>
+            <div id="setorOrdemHelp" class="form-text">Selecione de 1 a 5, sendo 1 muito critica e 5 não crítica.</div>
+
+          </div>
+  <%  }); %>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
+          <a href="consultarMaquinas" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+
+        </div>
+
+
+
+        <div class="conteudoDireitoUsuario">
+          <div class="mb-3">
+            <label for="tecnicoMaquina" class="form-label">Resultado da pesquisa:</label>
+          </div>
+
+          <table lass="table table-borderless">
+
+            <% listaDeMaquinas.forEach(function(maquina) { %>
+
+            <tr>
+              <td><b>ID da máquina: </b><%= maquina.idMaquina %> </td>
+            </tr>
+            <tr>
+              <td><b>Nome da máquina: </b><%= maquina.nomeMaquina %></td>
+            </tr>
+
+            <tr>
+              <td><b>Descrição: </b><%= maquina.descricaoMaquina %> </td>
+            </tr>
+            <tr>
+              <td><b>Setor: </b><%= maquina.setorMaquina %></td>
+            </tr>
+            <tr>
+              <td><b>Técnico responsável: </b> <%= maquina.tecnicoMaquina %> </td>
+            </tr>
+            <tr>
+              <td><b>Criticidade: </b><%= maquina.criticidadeMaquina %></td>
+            </tr>
+            <tr>
+              <td><b>Turno de trabalho: </b><%= maquina.turnoTrabalho %></td>
+            </tr>
+            <tr>
+              <td><b>Data de implementação: </b><%= maquina.dataInstalacaoMaquina.toDateString() %><p><br></p></td>
+            </tr>
+
+
+            <%  }); %>
+          </table>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+
+
+</body>
+
+</html>
