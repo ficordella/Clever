@@ -1,7 +1,7 @@
 //Funções responsáveis pela tela de login na página index.html
 mongoose.connect("mongodb://localhost:27017/userDB");
 const mongoose = require("mongoose");
-
+const nodemailer = require("nodemailer");
 
 function logar() {
   var login = document.getElementById("login");
@@ -56,10 +56,10 @@ function gerarCodigo() {
 function sendEmail() {
   Email.send({
     Host: "smtp.gmail.com",
-    Username: "maintenanceclever@gmail.com",
+    Username: "noreplyclever@gmail.com",
     Password: "Clever12#",
     To: email.value,
-    From: "maintenanceclever@gmail.com",
+    From: "noreplyclever@gmail.com",
     Subject: "Código de validação para troca de senha",
     Body: "Seu código para troca de senha é: " + gerarCodigo(),
   }).then(
@@ -83,9 +83,9 @@ function validacaoEmail() {
     (dominio.search(".") != -1) &&
     (dominio.indexOf(".") >= 1) &&
     (dominio.lastIndexOf(".") < dominio.length - 1)) {
-
-    sendEmail();
-    //enviarCodigo();
+      console.log("email validado");
+      sendEmail();
+       //enviarCodigo();
   } else {
     alert("Informe um e-mail válido");
   }
@@ -263,10 +263,10 @@ function novaSenhaInformada(newPassword) {
 function sendEmailUsuario() {
   Email.send({
     Host: "smtp.gmail.com",
-    Username: "maintenanceclever@gmail.com",
+    Username: "noreplyclever@gmail.com",
     Password: "Clever12#",
     To: newUserEmail.value,
-    From: "maintenanceclever@gmail.com",
+    From: "noreplyclever@gmail.com",
     Subject: "Novo usuário cadastrado!",
     Body: "Cadastramos seu novo usuário no Clever Maintenance Software com as seguintes informações: Login: " + loginNewUser.value + ", Senha: " + newPassword.value + ", Nome: " + nomeCompleto.value + ", E-mail informado: " + newUserEmail.value + ", Data de nascimento: " + dataNascimento.value + ", muito obrigado!",
   }).then(

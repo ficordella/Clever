@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const app = express();
-
+var nodemailer = require("nodemailer");
 
 
 app.set('view engine', 'ejs'); // função para renderizar as views
@@ -26,9 +26,9 @@ app.get("/", function(req, res) { //função para renderizar a pagina de login
 
   res.render("index");
 });
-
+  
 app.get("/novoUsuario", function(req, res) {
-  res.render("novoUsuario");
+    res.render("novoUsuario");
 });
 
 app.get("/confirmarUsuario", function(req, res) {
@@ -595,10 +595,28 @@ app.post("/confirmarUsuario", function(req, res) {
       },
       function(err, foundUser) {
         if (foundUser) {
-          res.send("Seu login para acesso é: " + foundUser.login);
+          var transport = nodemailer.createTransport({
+            host:"smtp.gmail.com",
+            port:587,
+            auth: {
+              user:"noreplyclever@gmail.com",
+              pass:"Clever12#"
+            }
+          });
+        
+           var message = {
+            from:"noreplyclever@gmail.com",
+            to:emailConfirmacao,
+            subject:"Clever - lembrete login de acesso!",
+            text:"Seu login para acesso é:" + foundUser.login,
+            html:"<p>Seu login para acesso é:" + foundUser.login,
+          };
+        
+          transport.sendMail(message);
+          res.render("mensagemTela");
           console.log(foundUser.login);
         } else {
-          res.send("Esse email não está cadastrado no sistema!");
+          res.render("mensagemTelaInvalido");
           console.log("No user found");
         }
       }
@@ -609,10 +627,28 @@ app.post("/confirmarUsuario", function(req, res) {
       },
       function(err, foundUser) {
         if (foundUser) {
-          res.send("Seu login para acesso é: " + foundUser.login);
+          var transport = nodemailer.createTransport({
+            host:"smtp.gmail.com",
+            port:587,
+            auth: {
+              user:"noreplyclever@gmail.com",
+              pass:"Clever12#"
+            }
+          });
+        
+           var message = {
+            from:"noreplyclever@gmail.com",
+            to:emailConfirmacao,
+            subject:"Clever - lembrete login de acesso!",
+            text:"Seu login para acesso é:" + foundUser.login,
+            html:"<p>Seu login para acesso é:" + foundUser.login,
+          };
+        
+          transport.sendMail(message);
+          res.render("mensagemTela");
           console.log(foundUser.login);
         } else {
-          res.send("Esse nome não está cadastrado no sistema!");
+          res.render("mensagemTelaInvalido");
           console.log("No user found");
         }
       }
@@ -1371,16 +1407,36 @@ app.post("/criarOrdens", function(req, res) {
     status: "Aberta"
 
   });
+  
+  var transport = nodemailer.createTransport({
+    host:"smtp.gmail.com",
+    port:587,
+    auth: {
+      user:"noreplyclever@gmail.com",
+      pass:"Clever12#"
+    }
+  });
+
+   var message = {
+    from:"noreplyclever@gmail.com",
+    to:"lurnakata@gmail.com",
+    subject:"Nova ordem - número: " + count,
+    text:"Nova ordem de serviço criada!",
+    html:"<h2>Nova ordem de serviço criada!</h2> <p>Título da ordem de serviço: " + req.body.tituloOrdem + "</p>" + "<p>Descrição: " + req.body.descricaoOrdem +"</p>" + "<p>Máquina: " + req.body.maquinaOrdem + "</p>" + "<p>Hora: " + req.body.horaOrdem + "</p>" + "<p>Data: " +
+    + req.body.dataOrdem + "</p>" + "<p>Setor: " + req.body.setorOrdem + "</p>" + "<p>Máquina parada? " + req.body.maquinaParada + "</p>" + "<p>Tipo da ordem: " + req.body.flexRadioDefault + "</p>" + "<p>Status: Aberta</p>",
+  };
+
+  transport.sendMail(message);
 
 
-
-  //  console.log(newItem.descricaoItem)
+  // console.log(newItem.descricaoItem)
 
   newOrdem.save(function(err) {
     if (err) {
       console.log("A ordem não foi salva");
     } else {
       console.log("Nova ordem salva!");
+      console.log(req.body.tituloOrdem);
       var i = count;
       res.send("Sua ordem foi criada com sucesso, o número é: " + count);
     }
@@ -2283,7 +2339,7 @@ app.post("/processoMaquinas", function(req, res) {
 
   newSensor.save(function(err) {
     if (err) {
-      console.log("O senshor não foi salvo");
+      console.log("O sensor não foi salvo");
     } else {
       console.log("Sensor cadastrado!");
       res.render("mensagemSucesso")
